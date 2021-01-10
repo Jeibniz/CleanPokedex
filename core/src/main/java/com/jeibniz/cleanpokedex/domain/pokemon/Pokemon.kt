@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex.data.pokemon.model
+package com.jeibniz.cleanpokedex.domain.pokemon
 
 data class Pokemon(
     val name: String,
