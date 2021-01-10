@@ -15,6 +15,6 @@
         android:id="@+id/auth_nav_host_fragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation_graph"
-        />
+        tools:ignore="FragmentTagUsage" />
 
 </androidx.fragment.app.FragmentContainerView>

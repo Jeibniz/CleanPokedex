@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class PokedexViewModelFactoryModule {
     @Singleton
     @Provides
-    fun provideResponderViewModelFactory(): ViewModelProvider.Factory {
+    fun providePokedexViewModelFactory(): ViewModelProvider.Factory {
         return PokedexViewModelFactory()
     }
 }
