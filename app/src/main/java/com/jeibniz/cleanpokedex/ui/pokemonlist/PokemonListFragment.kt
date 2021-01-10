@@ -8,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.jeibniz.cleanpokedex.R
 
-class PokemonListFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = PokemonListFragment()
-    }
-
+class PokemonListFragment(
+    private val viewModelFactory: ViewModelProvider.Factory,
+) : Fragment() {
+    
     private lateinit var viewModel: PokemonListViewModel
 
     override fun onCreateView(
@@ -22,6 +20,17 @@ class PokemonListFragment : Fragment() {
     ): View {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel =  ViewModelProvider(this, viewModelFactory).get(PokemonListViewModel::class.java)
+        initUiComponents(view)
+    }
+
+    private fun initUiComponents(view: View) {
+
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
