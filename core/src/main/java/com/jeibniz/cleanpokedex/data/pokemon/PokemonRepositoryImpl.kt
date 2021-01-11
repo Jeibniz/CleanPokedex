@@ -47,7 +47,7 @@ class PokemonRepositoryImpl(
             if (remoteData.status == Resource.Status.SUCCESS) {
                 localDataSource.saveRange(remoteData.data!!)
             } else if (remoteData.status == Resource.Status.ERROR) {
-                Log.d(TAG, "observePokemons: Remote data error: " + remoteData.throwable.toString())
+                Log.e(TAG, "observePokemons: Remote data error: " + remoteData.throwable.toString(), remoteData.throwable)
             }
         }
     }

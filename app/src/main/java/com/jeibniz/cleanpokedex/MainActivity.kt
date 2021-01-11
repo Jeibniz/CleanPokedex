@@ -29,6 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFragmentFactory() {
-        supportFragmentManager.fragmentFactory = fragmentFactory!!
+        supportFragmentManager.fragmentFactory = fragmentFactory
     }
 }

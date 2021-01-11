@@ -1,8 +1,8 @@
-package com.jeibniz.cleanpokedex.framework.data.remote.pokemon
+package com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model
 
 import com.google.gson.annotations.SerializedName
 
 data class SpriteResponse(
     @SerializedName("front_default")
-    private val defaultUrl: String
+    val defaultUrl: String
 )
