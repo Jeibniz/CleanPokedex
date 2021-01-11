@@ -9,11 +9,13 @@ import com.jeibniz.cleanpokedex.R
 class PokemonListViewHolder(v: View) : RecyclerView.ViewHolder(v) {
     val imageView: ImageView
     val nameView: TextView
-    val descriptionView: TextView
+    val numberView: TextView
+    val typeView: TextView
 
     init {
         imageView = v.findViewById(R.id.pokemon_list_viewholder_itemImage)
         nameView = v.findViewById(R.id.pokemon_list_viewholder_itemName)
-        descriptionView = v.findViewById(R.id.pokemon_list_viewholder_itemDescription)
+        numberView = v.findViewById(R.id.pokemon_list_viewholder_itemNumber)
+        typeView = v.findViewById(R.id.pokemon_list_viewholder_itemType)
     }
 }

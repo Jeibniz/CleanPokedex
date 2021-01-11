@@ -13,6 +13,8 @@ class PokemonListAdapter(
 
     fun setPokemons(pokemons: List<PokemonListEntry>) {
         this.pokemons = pokemons
+        notifyItemInserted(0)
+        //notifyItemInserted(1)
         notifyDataSetChanged()
     }
 
@@ -32,7 +34,8 @@ class PokemonListAdapter(
             .into(holder.imageView);
 
         holder.nameView.text = pokemons[position].name
-        holder.descriptionView.text = pokemons[position].description
+        holder.numberView.text = pokemons[position].number.toString().padStart(3, '0')
+        holder.typeView.text = pokemons[position].types.reduce { acc, s -> String.format("%s %s", acc, s) }
     }
 
     override fun getItemCount(): Int {

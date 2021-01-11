@@ -4,14 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
+    android:layout_marginEnd="4dp"
     >
 
     <ImageView
         android:id="@+id/pokemon_list_viewholder_itemImage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:adjustViewBounds="true"
 
         app:layout_constraintTop_toTopOf="parent"
@@ -29,12 +30,22 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/pokemon_list_viewholder_itemDescription"
+        app:layout_constraintBottom_toTopOf="@+id/pokemon_list_viewholder_itemType"
         app:layout_constraintLeft_toRightOf="@id/pokemon_list_viewholder_itemImage"
         tools:text="Some name" />
 
     <TextView
-        android:id="@+id/pokemon_list_viewholder_itemDescription"
+        android:id="@+id/pokemon_list_viewholder_itemNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/pokemon_list_viewholder_itemType"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="001" />
+
+    <TextView
+        android:id="@+id/pokemon_list_viewholder_itemType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="4"

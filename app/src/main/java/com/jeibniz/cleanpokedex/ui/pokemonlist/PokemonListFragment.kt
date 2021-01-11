@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jeibniz.cleanpokedex.R
+import com.jeibniz.cleanpokedex.data.Resource
+import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 
 class PokemonListFragment(
     private val viewModelFactory: ViewModelProvider.Factory,
     private val adapter: PokemonListAdapter
 ) : Fragment() {
+    private val TAG = "PokemonListFragment"
     
     private lateinit var viewModel: PokemonListViewModel
 
@@ -33,23 +37,25 @@ class PokemonListFragment(
 
     private fun initUiComponents(view: View) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.fragment_list_recyclerview)
-
-
-
+        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-        //recyclerView.adapter(ArrayAdapter<String>(this, R.style.))
-
     }
 
     private fun subscribeObservers() {
-        // Ensure that we do not subscribe multiple times.
-        /*
-        viewModel.observePairing().removeObservers(viewLifecycleOwner)
-        viewModel.observePairing().observe(
-            viewLifecycleOwner
-        ) { userAuthResource: AuthResource<String?>? -> this.onPairedStateChanged(userAuthResource) }
+        viewModel.observePokemons().observe(
+            viewLifecycleOwner) {
+            onDataChanged(it)
+        }
+    }
 
-         */
+    private fun onDataChanged(resource: Resource<List<PokemonListEntry>>) {
+        Log.d(TAG, "onDataChanged: " + resource.status)
+        Log.d(TAG, "onDataChanged: " + resource.data!!.size)
+        if (resource.status == Resource.Status.SUCCESS) {
+           adapter.setPokemons(resource.data!!)
+        } else if (resource.status == Resource.Status.ERROR) {
+            throw resource.throwable!!
+        }
     }
 
 
