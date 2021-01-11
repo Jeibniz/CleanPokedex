@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex.framework.data.remote
+package com.jeibniz.cleanpokedex.framework.data.remote.pokemon
 
 import androidx.lifecycle.LiveData
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRemoteDataSource

@@ -10,6 +10,8 @@ interface PokemonLocalDataSource {
 
     fun observeSingle(index: Int) : LiveData<Resource<Pokemon>>
 
+    fun saveRange(data: List<Pokemon>)
 
+    fun saveSingle(data: Pokemon)
 
 }

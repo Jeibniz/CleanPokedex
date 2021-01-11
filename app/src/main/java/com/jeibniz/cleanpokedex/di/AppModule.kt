@@ -7,9 +7,8 @@ import com.jeibniz.cleanpokedex.data.pokemon.PokemonRemoteDataSource
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRepository
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRepositoryImpl
 import com.jeibniz.cleanpokedex.framework.data.local.pokemon.RoomDataSource
-import com.jeibniz.cleanpokedex.framework.data.remote.RetrofitDataSource
+import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.RetrofitDataSource
 import com.jeibniz.cleanpokedex.ui.pokemonlist.PokemonListAdapter
-import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 import dagger.Module
 import dagger.Provides

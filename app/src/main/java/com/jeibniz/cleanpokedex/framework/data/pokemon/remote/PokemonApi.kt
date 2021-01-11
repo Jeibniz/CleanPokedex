@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex.framework.data.remote
+package com.jeibniz.cleanpokedex.framework.data.remote.pokemon
 
 import retrofit2.Call
 import retrofit2.http.GET

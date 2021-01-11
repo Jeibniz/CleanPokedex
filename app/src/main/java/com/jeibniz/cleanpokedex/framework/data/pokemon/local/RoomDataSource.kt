@@ -29,4 +29,12 @@ class RoomDataSource(
     override fun observeSingle(index: Int): LiveData<Resource<Pokemon>> {
         TODO("Not yet implemented")
     }
+
+    override fun saveRange(data: List<Pokemon>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveSingle(data: Pokemon) {
+        TODO("Not yet implemented")
+    }
 }

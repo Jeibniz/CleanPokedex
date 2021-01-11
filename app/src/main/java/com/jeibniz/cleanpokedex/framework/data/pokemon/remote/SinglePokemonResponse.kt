@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex.framework.data.remote
+package com.jeibniz.cleanpokedex.framework.data.remote.pokemon
 
 data class SinglePokemonResponse(
     val name: String,

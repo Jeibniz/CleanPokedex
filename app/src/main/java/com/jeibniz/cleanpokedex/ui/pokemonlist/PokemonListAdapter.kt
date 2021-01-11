@@ -14,7 +14,6 @@ class PokemonListAdapter(
     fun setPokemons(pokemons: List<PokemonListEntry>) {
         this.pokemons = pokemons
         notifyItemInserted(0)
-        //notifyItemInserted(1)
         notifyDataSetChanged()
     }
 
