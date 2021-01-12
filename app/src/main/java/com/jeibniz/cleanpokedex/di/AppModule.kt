@@ -1,11 +1,14 @@
 package com.jeibniz.cleanpokedex.di
 
 import android.content.Context
+import androidx.room.Room
 import com.jeibniz.cleanpokedex.BaseApplication
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonLocalDataSource
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRemoteDataSource
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRepository
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRepositoryImpl
+import com.jeibniz.cleanpokedex.framework.data.PokedexDatabase
+import com.jeibniz.cleanpokedex.framework.data.local.pokemon.PokemonDao
 import com.jeibniz.cleanpokedex.framework.data.local.pokemon.RoomDataSource
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.NetworkConstants
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.RetrofitDataSource
@@ -25,6 +28,25 @@ class AppModule {
     fun provideContext(baseApplication: BaseApplication): Context {
         return baseApplication.getBaseContext()
     }
+
+    // Room
+
+    @Singleton
+    @Provides
+    fun providePokedexDatabase(context: Context): PokedexDatabase {
+        return Room.databaseBuilder(
+                context.applicationContext,
+                PokedexDatabase::class.java,
+                PokedexDatabase.DATABASE_NAME
+            ).build()
+    }
+
+    @Provides
+    fun providePokemonDao(pokedexDatabase: PokedexDatabase): PokemonDao {
+        return pokedexDatabase.getPokemonDao()
+    }
+
+    // Retrofit
 
     @Singleton
     @Provides
@@ -46,6 +68,8 @@ class AppModule {
             .build()
     }
 
+    // Repository
+
     @Provides
     fun providePokemonRepository(
         pokemonLocalDataSource: PokemonLocalDataSource,
@@ -54,20 +78,26 @@ class AppModule {
         return PokemonRepositoryImpl(pokemonLocalDataSource, pokemonRemoteDataSource)
     }
 
+    // Data sources
+
     @Provides
     fun providePokemonRemoteDataSource(retrofit: Retrofit): PokemonRemoteDataSource {
         return RetrofitDataSource(retrofit)
     }
 
     @Provides
-    fun providePokemonLocalDataSource(context: Context): PokemonLocalDataSource {
-        return RoomDataSource(context)
+    fun providePokemonLocalDataSource(pokemonDao: PokemonDao): PokemonLocalDataSource {
+        return RoomDataSource(pokemonDao)
     }
+
+    // Use cases
 
     @Provides
     fun provideGetGenOnePokemons(pokemonRepository: PokemonRepository): GetGenOnePokemons {
         return GetGenOnePokemons(pokemonRepository)
     }
+
+    // Ui
 
     @Provides
     fun providePokemonListAdapter(): PokemonListAdapter {

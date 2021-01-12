@@ -3,15 +3,16 @@ package com.jeibniz.cleanpokedex.data.pokemon
 import androidx.lifecycle.LiveData
 import com.jeibniz.cleanpokedex.data.Resource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
+import kotlinx.coroutines.flow.Flow
 
 interface PokemonLocalDataSource {
 
-    fun observeRange(from: Int, to: Int) : LiveData<Resource<List<Pokemon>>>
+    fun observeRange(from: Int, to: Int) : Flow<Resource<List<Pokemon>>>
 
-    fun observeSingle(index: Int) : LiveData<Resource<Pokemon>>
+    fun observeSingle(index: Int) : Flow<Resource<Pokemon>>
 
-    fun saveRange(data: List<Pokemon>)
+    suspend fun saveRange(data: List<Pokemon>)
 
-    fun saveSingle(data: Pokemon)
+    suspend fun saveSingle(data: Pokemon)
 
 }

@@ -1,5 +1,6 @@
 package com.jeibniz.cleanpokedex.ui.pokemonlist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,14 +9,19 @@ import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.squareup.picasso.Picasso
 
 class PokemonListAdapter(
-    private var pokemons: List<PokemonListEntry> = emptyList<PokemonListEntry>()) :
-        RecyclerView.Adapter<PokemonListViewHolder>() {
+            private var pokemons: List<PokemonListEntry> = emptyList<PokemonListEntry>()
+) : RecyclerView.Adapter<PokemonListViewHolder>() {
+
+    private val TAG = "PokemonListAdapter"
 
     fun setPokemons(pokemons: List<PokemonListEntry>) {
+        Log.v(TAG, "setPokemons: new list with size " + pokemons.size)
         this.pokemons = pokemons
         notifyItemInserted(0)
         notifyDataSetChanged()
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonListViewHolder {
         // Setting attach to root to false.

@@ -1,8 +1,6 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -27,6 +25,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -58,9 +59,23 @@ dependencies {
 
     // Room components
     def roomVersion = "2.2.6"
+
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
+    /*
     implementation "androidx.room:room-runtime:$roomVersion"
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
+
+    //kapt "androidx.room:room-compiler:$roomVersion"
+
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    //kapt 'android.arch.persistence.room:compiler:1.1.1'
+
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
+
+     */
+
 
     // Retrofit
     def retrofit_version = "2.6.0"
