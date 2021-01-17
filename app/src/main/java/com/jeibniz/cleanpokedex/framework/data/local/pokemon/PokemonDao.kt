@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokemonDao {
-    @Query("SELECT * FROM pokemon_table WHERE :from < number AND number < :to")
+    @Query("SELECT * FROM pokemon_table WHERE :from <= number AND number <= :to")
     fun getRange(from: Int, to: Int): Flow<List<PokemonEntity>>
 
     @Query("SELECT * FROM pokemon_table WHERE number = :number")

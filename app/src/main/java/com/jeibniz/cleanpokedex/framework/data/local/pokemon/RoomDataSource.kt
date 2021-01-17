@@ -15,21 +15,6 @@ class RoomDataSource(
     private val pokemonDao: PokemonDao
 ) : PokemonLocalDataSource {
 
-    private val tempObservable=  MutableLiveData<Resource<List<Pokemon>>>()
-
-    /*
-val bulbasar = Pokemon("Bulbasar", 1, "A pokemon", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    listOf("Grass","Poision"), 3 ,5)
-
-val charmander = Pokemon("Charmander", 4,"A pokemon", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    listOf("fire"), 3 ,5)
-
-tempObservable.postValue(Resource.success(listOf(bulbasar, charmander)))
-
-return tempObservable
-
- */
-
     override fun observeRange(from: Int, to: Int): Flow<Resource<List<Pokemon>>> {
         return pokemonDao.getRange(from, to).map { Resource.success(it.map { it.toPokemon() }) }
     }

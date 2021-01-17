@@ -34,7 +34,7 @@ class PokemonListAdapter(
         holder.nameView.text = pokemons[position].name
 
         Picasso.with(holder.imageView.context).load(pokemons[position].imageUrl).fit().centerCrop()
-            .placeholder(R.drawable.pokemon_placeholder)
+            //.placeholder(R.drawable.pokemon_placeholder)
             .error(R.drawable.pokemon_error_placeholder)
             .into(holder.imageView);
 

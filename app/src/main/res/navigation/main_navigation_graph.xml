@@ -11,6 +11,25 @@
         android:name="com.jeibniz.cleanpokedex.ui.pokemonlist.PokemonListFragment"
         android:label="ListFragment"
         tools:layout="@layout/pokemon_list_fragment">
+        <!--
+        <action
+            android:id="@+id/viewPokemonDetails"
+            app:destination="@id/pokemonDetailsFragment" />
+             -->
+        <action
+            android:id="@+id/action_pokemonListFragment_to_pokemonDetailsFragment"
+            app:destination="@id/pokemonDetailsFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/pokemonDetailsFragment"
+        android:name="com.jeibniz.cleanpokedex.ui.pokemondetail.PokemonDetailFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/pokemon_detail_fragment">
+        <argument
+            android:name="pokemonNumber"
+            app:argType="integer"
+            android:defaultValue="1"
+        />
     </fragment>
 
 </navigation>

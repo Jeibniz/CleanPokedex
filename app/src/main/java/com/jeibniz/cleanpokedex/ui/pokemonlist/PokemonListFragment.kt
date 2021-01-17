@@ -38,6 +38,7 @@ class PokemonListFragment(
     private fun initUiComponents(view: View) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.fragment_list_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), R.drawable.divider))
         recyclerView.adapter = adapter
     }
 
