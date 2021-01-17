@@ -9,7 +9,7 @@ import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 
 class PokemonListViewModel(
-    private val getGenOnePokemons: GetGenOnePokemons
+    getGenOnePokemons: GetGenOnePokemons
 ) : ViewModel() {
 
     private var pokemons: LiveData<Resource<List<PokemonListEntry>>> =

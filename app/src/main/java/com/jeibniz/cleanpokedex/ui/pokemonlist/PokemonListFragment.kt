@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jeibniz.cleanpokedex.R
@@ -51,13 +53,10 @@ class PokemonListFragment(
 
     private fun onDataChanged(resource: Resource<List<PokemonListEntry>>) {
         Log.d(TAG, "onDataChanged: " + resource.status)
-        Log.d(TAG, "onDataChanged: " + resource.data!!.size)
         if (resource.status == Resource.Status.SUCCESS) {
            adapter.setPokemons(resource.data!!)
         } else if (resource.status == Resource.Status.ERROR) {
             throw resource.throwable!!
         }
     }
-
-
 }
