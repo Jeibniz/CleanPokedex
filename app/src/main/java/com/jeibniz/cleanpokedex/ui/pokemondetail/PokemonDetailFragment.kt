@@ -11,7 +11,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.navArgs
 import com.jeibniz.cleanpokedex.R
+import com.jeibniz.cleanpokedex.data.Resource
+import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.ui.pokemonlist.PokemonListViewModel
+import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
+import com.squareup.picasso.Picasso
 
 class PokemonDetailFragment(
     private val viewModelFactory: ViewModelProvider.Factory
@@ -39,9 +43,10 @@ class PokemonDetailFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel =  ViewModelProvider(this, viewModelFactory).get(PokemonDetailViewModel::class.java)
+        viewModel.start(args.pokemonNumber)
         Log.d(TAG, "onViewCreated: " + args.pokemonNumber)
         initUiComponents(view)
-        //subscribeObservers()
+        subscribeObservers()
     }
 
     private fun initUiComponents(view: View) {
@@ -53,5 +58,31 @@ class PokemonDetailFragment(
         weightView = view.findViewById(R.id.fragment_detail_weight)
     }
 
+    private fun subscribeObservers() {
+        viewModel.observePokemon().observe(viewLifecycleOwner) {
+            onDataChanged(it)
+        }
+    }
 
+    private fun onDataChanged(resource: Resource<Pokemon>) {
+        Log.d(TAG, "onDataChanged: " + resource.status)
+
+        if (resource.status == Resource.Status.SUCCESS) {
+            updateViews(resource.data!!)
+        } else if (resource.status == Resource.Status.ERROR) {
+            throw resource.throwable!!
+        }
+    }
+
+    private fun updateViews(pokemon: Pokemon) {
+        Picasso.with(context).load(pokemon.imageUrl).fit().centerCrop()
+            .error(R.drawable.pokemon_error_placeholder)
+            .into(imageView);
+
+        nameView.text = pokemon.name
+        numberView.text = pokemon.number.toString().padStart(3, '0')
+        descriptionView.text = pokemon.description
+        heightView.text = pokemon.height.toString()
+        weightView.text = pokemon.weight.toString()
+    }
 }

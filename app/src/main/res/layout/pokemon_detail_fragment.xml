@@ -9,6 +9,8 @@
 
     <ImageView
         android:id="@+id/fragment_detail_imageView"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="1:1"
@@ -27,12 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/fragment_detail_imageView">
 
         <TextView
             android:id="@+id/fragment_detail_name"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"

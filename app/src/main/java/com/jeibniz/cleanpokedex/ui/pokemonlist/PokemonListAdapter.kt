@@ -30,8 +30,6 @@ class PokemonListAdapter(
     }
 
     override fun onBindViewHolder(holder: PokemonListViewHolder, position: Int) {
-        holder.nameView.text = pokemons[position].name
-
         Picasso.with(holder.imageView.context).load(pokemons[position].imageUrl).fit().centerCrop()
             .error(R.drawable.pokemon_error_placeholder)
             .into(holder.imageView);
