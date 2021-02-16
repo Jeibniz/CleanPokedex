@@ -5,10 +5,13 @@ import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.framework.data.local.pokemon.PokemonEntity
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model.GeneralPokemonResponse
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
+import com.jeibniz.cleanpokedex.utils.TextUtils
+import java.util.*
 
 fun GeneralPokemonResponse.toPokemon () : Pokemon {
-    val types = types.map {it.type.name}
-    return Pokemon(name, number, "", sprites.defaultUrl, types, height, weight)
+    val types = types.map {TextUtils.firstLetterToUpperCase(it.type.name)}
+    val upperCaseFirstLetterName = TextUtils.firstLetterToUpperCase(name)
+    return Pokemon(upperCaseFirstLetterName, number, "", sprites.defaultUrl, types, height, weight)
 }
 
 fun PokemonEntity.toPokemon () : Pokemon {

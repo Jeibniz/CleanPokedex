@@ -5,10 +5,13 @@ import com.jeibniz.cleanpokedex.data.pokemon.PokemonRemoteDataSource
 import com.jeibniz.cleanpokedex.data.Resource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.NetworkConstants
+import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model.GeneralPokemonResponse
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
@@ -22,6 +25,7 @@ class RetrofitDataSource(
     private val TAG = "RetrofitDataSource"
 
     val generalPokemonApi: GeneralPokemonApi = retrofit.create(GeneralPokemonApi::class.java)
+    val detailedPokemonApi: DetailedPokemonApi = retrofit.create(DetailedPokemonApi::class.java)
 
     override suspend fun getRange(from: Int, to: Int): Resource<List<Pokemon>> {
         val resultList = mutableListOf<Pokemon>()
@@ -46,17 +50,35 @@ class RetrofitDataSource(
         }
     }
 
-    private suspend fun getSinglePokemon(index: Int) : Pokemon {
-        val apiCall = generalPokemonApi.getSingle(index)
+    private fun getSinglePokemon(index: Int) : Pokemon {
+        val pokemon = getGeneralPokemon(index)
+        pokemon.description = getFirstPokemonDescription(index)
 
-        //val apiResponse = withContext(Dispatchers.IO) { apiCall.execute() }
+        return pokemon
+    }
+
+    private fun getGeneralPokemon(index: Int): Pokemon {
+        val apiCall = generalPokemonApi.getSingle(index)
         val apiResponse = apiCall.execute()
-        Log.d(TAG, "getSinglePokemon: calling url: " + apiCall.request())
+        Log.d(TAG, "getGeneralPokemon: calling url: " + apiCall.request())
         apiCall.request().url()
         if (!apiResponse.isSuccessful || apiResponse.body() == null) {
             throw IOException("Unsuccessful retrofit call")
         }
+
         return apiResponse.body()!!.toPokemon()
+    }
+
+    private fun getFirstPokemonDescription(index: Int): String {
+        val detailedApiCall = detailedPokemonApi.getSingle(index)
+
+        val detailedApiResponse = detailedApiCall.execute()
+        Log.d(TAG, "getPokemonDescription: calling url: " + detailedApiCall.request())
+        detailedApiCall.request().url()
+        if (!detailedApiResponse.isSuccessful || detailedApiResponse.body() == null) {
+            throw IOException("Unsuccessful retrofit call")
+        }
+        return detailedApiResponse.body()!!.descriptions.get(0).description
     }
 
 }

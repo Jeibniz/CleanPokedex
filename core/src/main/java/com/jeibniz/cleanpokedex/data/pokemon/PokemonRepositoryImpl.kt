@@ -30,7 +30,6 @@ class PokemonRepositoryImpl(
         return localLiveData
     }
 
-
     private fun rangeIsValid(resource: Resource<List<Pokemon>>?, expectedSize: Int): Boolean {
         if (resource?.data == null) {
             return false
@@ -49,10 +48,7 @@ class PokemonRepositoryImpl(
                 localDataSource.saveRange(remoteData.data!!)
             } else if (remoteData.status == Resource.Status.ERROR) {
                 Log.e(TAG, "observePokemons: Remote data error: " + remoteData.throwable.toString(), remoteData.throwable)
-
             }
         }
     }
-
-
 }
