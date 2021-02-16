@@ -81,6 +81,7 @@ class PokemonDetailFragment(
 
         nameView.text = pokemon.name
         numberView.text = pokemon.number.toString().padStart(3, '0')
+        Log.d(TAG, "updateViews: " + pokemon.description)
         descriptionView.text = pokemon.description
         heightView.text = pokemon.height.toString()
         weightView.text = pokemon.weight.toString()

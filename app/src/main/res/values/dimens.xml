@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="data_text_separation">8dp</dimen>
+    <dimen name="pokemon_detail_fragment_margin">24dp</dimen>
+    <dimen name="medium_text">18sp</dimen>
+</resources>

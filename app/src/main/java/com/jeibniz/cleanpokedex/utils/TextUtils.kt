@@ -10,5 +10,9 @@ class TextUtils {
             }
             return text.substring(0, 1).toUpperCase(Locale.ROOT) + text.substring(1)
         }
+
+        fun removeNewLine(text: String) : String {
+           return text.replace('\n', ' ')
+        }
     }
 }

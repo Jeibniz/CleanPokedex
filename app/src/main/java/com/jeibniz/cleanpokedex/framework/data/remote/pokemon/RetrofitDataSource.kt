@@ -7,6 +7,7 @@ import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.NetworkConstants
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model.GeneralPokemonResponse
 import com.jeibniz.cleanpokedex.mappers.toPokemon
+import com.jeibniz.cleanpokedex.utils.TextUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -78,7 +79,8 @@ class RetrofitDataSource(
         if (!detailedApiResponse.isSuccessful || detailedApiResponse.body() == null) {
             throw IOException("Unsuccessful retrofit call")
         }
-        return detailedApiResponse.body()!!.descriptions.get(0).description
+        val firstDescription =  detailedApiResponse.body()!!.descriptions.get(0).description
+        return TextUtils.removeNewLine(firstDescription)
     }
 
 }

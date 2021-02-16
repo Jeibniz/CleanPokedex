@@ -22,9 +22,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_detail_header_container"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/pokemon_detail_fragment_margin"
+        android:layout_marginEnd="@dimen/pokemon_detail_fragment_margin"
+        android:layout_marginTop="@dimen/pokemon_detail_fragment_margin"
         android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,6 @@
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
             tools:text="Eevee"
             />
 
@@ -57,19 +56,19 @@
 
     <TextView
         android:id="@+id/fragment_detail_description"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pokemon_detail_fragment_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_detail_header_container"
 
-        tools:text="Lorem ispusm ... Lorem ispusm ... Lorem ispusm ... Lorem ispusm ... Lorem ispusm ... Lorem ispusm ... Lorem ispusm ..."
-        />
+        tools:text="When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs." />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_detail_info_container"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/pokemon_detail_fragment_margin"
+        android:layout_marginEnd="@dimen/pokemon_detail_fragment_margin"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,25 +76,44 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_detail_description">
 
         <TextView
+            android:id="@+id/fragment_detail_height_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/pokemon_height" />
+        <TextView
             android:id="@+id/fragment_detail_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/medium_text"
+            app:layout_constraintStart_toEndOf="@id/fragment_detail_height_text"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/data_text_separation"
+            tools:text="5"
+            />
 
-            tools:text="Height: 5"
+        <TextView
+            android:id="@+id/fragment_detail_weight_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text"
+            app:layout_constraintStart_toEndOf="@id/fragment_detail_height"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            android:text="@string/pokemon_weight"
             />
 
         <TextView
             android:id="@+id/fragment_detail_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/medium_text"
+            app:layout_constraintStart_toEndOf="@id/fragment_detail_weight_text"
             app:layout_constraintTop_toTopOf="parent"
-
-            tools:text="Weight: 4"
+            android:layout_marginStart="@dimen/data_text_separation"
+            tools:text="4"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
