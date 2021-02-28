@@ -6,6 +6,8 @@ import com.jeibniz.cleanpokedex.data.Resource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.NetworkConstants
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model.GeneralPokemonResponse
+import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.DescriptionLanguage
+import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.PokemonDescription
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +55,7 @@ class RetrofitDataSource(
 
     private fun getSinglePokemon(index: Int) : Pokemon {
         val pokemon = getGeneralPokemon(index)
-        pokemon.description = getFirstPokemonDescription(index)
+        pokemon.description = getFirstEnglishPokemonDescription(index)
 
         return pokemon
     }
@@ -70,7 +72,13 @@ class RetrofitDataSource(
         return apiResponse.body()!!.toPokemon()
     }
 
-    private fun getFirstPokemonDescription(index: Int): String {
+    private fun getFirstEnglishPokemonDescription(index: Int): String {
+        val descriptions = getDescriptions(index)
+        val firstDescription = findFirstEnglishDescription(descriptions)
+        return TextUtils.removeNewLine(firstDescription)
+    }
+
+    private fun getDescriptions(index: Int): List<PokemonDescription> {
         val detailedApiCall = detailedPokemonApi.getSingle(index)
 
         val detailedApiResponse = detailedApiCall.execute()
@@ -79,8 +87,20 @@ class RetrofitDataSource(
         if (!detailedApiResponse.isSuccessful || detailedApiResponse.body() == null) {
             throw IOException("Unsuccessful retrofit call")
         }
-        val firstDescription =  detailedApiResponse.body()!!.descriptions.get(0).description
-        return TextUtils.removeNewLine(firstDescription)
+        val descriptions = detailedApiResponse.body()!!.descriptions
+        return descriptions
     }
+
+    private fun findFirstEnglishDescription(descriptions: List<PokemonDescription>): String {
+        var firstDescription = ""
+        for (i in 0..descriptions.count()) {
+            if (descriptions.get(i).language.name.equals(DescriptionLanguage.englishIdentifier)) {
+                firstDescription = descriptions.get(i).description
+                break
+            }
+        }
+        return firstDescription
+    }
+
 
 }

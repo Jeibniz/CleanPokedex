@@ -2,6 +2,7 @@ package com.jeibniz.cleanpokedex.data.pokemon
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import com.jeibniz.cleanpokedex.data.Resource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
@@ -23,6 +24,8 @@ class PokemonRepositoryImpl(
         val localLiveData = localDataSource.observeRange(from, to).asLiveData()
         val expectedSize = to - from
 
+        localLiveData.observeForever(Observer {  })
+
         if (!rangeIsValid(localLiveData.value, expectedSize)) {
             updateLocalRangeFromRemote(from, to)
         }
@@ -43,11 +46,13 @@ class PokemonRepositoryImpl(
 
     private fun updateLocalRangeFromRemote(from: Int, to: Int) {
         GlobalScope.launch {
-            val remoteData = remoteDataSource.getRange(from, to)
-            if (remoteData.status == Resource.Status.SUCCESS) {
-                localDataSource.saveRange(remoteData.data!!)
-            } else if (remoteData.status == Resource.Status.ERROR) {
-                Log.e(TAG, "observePokemons: Remote data error: " + remoteData.throwable.toString(), remoteData.throwable)
+            for (i in from .. to) {
+                val remoteData = remoteDataSource.getSingle(i)
+                if (remoteData.status == Resource.Status.SUCCESS) {
+                    localDataSource.saveSingle(remoteData.data!!)
+                } else if (remoteData.status == Resource.Status.ERROR) {
+                    Log.e(TAG, "observePokemons: Remote data error: " + remoteData.throwable.toString(), remoteData.throwable)
+                }
             }
         }
     }
