@@ -38,6 +38,7 @@ class PokemonDetailFragment(
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.pokemon_detail_fragment, container, false)
+        // return ComposeV
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
