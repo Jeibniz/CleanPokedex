@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jeibniz.cleanpokedex.R
-import com.jeibniz.cleanpokedex.data.Resource
+import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 
 class PokemonListFragment(
@@ -45,18 +43,18 @@ class PokemonListFragment(
     }
 
     private fun subscribeObservers() {
-        viewModel.observePokemons().observe(
+        viewModel.pokemons.observe(
             viewLifecycleOwner) {
             onDataChanged(it)
         }
     }
 
-    private fun onDataChanged(resource: Resource<List<PokemonListEntry>>) {
-        Log.d(TAG, "onDataChanged: " + resource.status)
-        if (resource.status == Resource.Status.SUCCESS) {
-           adapter.setPokemons(resource.data!!)
-        } else if (resource.status == Resource.Status.ERROR) {
-            throw resource.throwable!!
+    private fun onDataChanged(result: Result<List<PokemonListEntry>>) {
+        Log.d(TAG, "onDataChanged: $result")
+        if (result is Result.Success) {
+           adapter.setPokemons(result.data)
+        } else if (result is Result.Error) {
+            throw result.exception
         }
     }
 }

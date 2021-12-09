@@ -5,8 +5,9 @@ import com.jeibniz.cleanpokedex.data.pokemon.PokemonRepository
 class GetGenOnePokemons(
     private val repository: PokemonRepository) {
 
-    private val GenOneLowerLimit = 1
-    private val GenOneUpperLimit = 151
+    private val genOneLowerLimit = 1
+    private val genOneUpperLimit = 151
 
-    operator fun invoke() = repository.observePokemons(GenOneLowerLimit, GenOneUpperLimit)
+    fun observePokemons() = repository.observePokemons()
+    suspend fun requestPokemons() = repository.requestPokemons(genOneLowerLimit, genOneUpperLimit)
 }

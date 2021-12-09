@@ -1,26 +1,15 @@
 package com.jeibniz.cleanpokedex.framework.data.remote.pokemon
 
 import android.util.Log
+import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRemoteDataSource
-import com.jeibniz.cleanpokedex.data.Resource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
-import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.NetworkConstants
-import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model.GeneralPokemonResponse
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.DescriptionLanguage
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.PokemonDescription
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class RetrofitDataSource(
     retrofit: Retrofit): PokemonRemoteDataSource {
@@ -30,7 +19,7 @@ class RetrofitDataSource(
     val generalPokemonApi: GeneralPokemonApi = retrofit.create(GeneralPokemonApi::class.java)
     val detailedPokemonApi: DetailedPokemonApi = retrofit.create(DetailedPokemonApi::class.java)
 
-    override suspend fun getRange(from: Int, to: Int): Resource<List<Pokemon>> {
+    override suspend fun getRange(from: Int, to: Int): Result<List<Pokemon>> {
         val resultList = mutableListOf<Pokemon>()
         try {
             for (i in 0..to - from) {
@@ -39,17 +28,17 @@ class RetrofitDataSource(
                 Log.d(TAG, "getRange: " + resultList.get(i).name)
             }
         } catch (exception: IOException) {
-            return Resource.error(exception)
+            return Result.Error(exception)
         }
 
-        return  Resource.success(resultList)
+        return  Result.Success(resultList)
     }
 
-    override suspend fun getSingle(index: Int): Resource<Pokemon> {
+    override suspend fun getSingle(index: Int): Result<Pokemon> {
         try {
-            return Resource.success(getSinglePokemon(index))
+            return Result.Success(getSinglePokemon(index))
         } catch (exception: Exception) {
-            return Resource.error(exception)
+            return Result.Error(exception)
         }
     }
 

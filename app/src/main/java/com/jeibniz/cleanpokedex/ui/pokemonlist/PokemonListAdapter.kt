@@ -10,7 +10,7 @@ import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.squareup.picasso.Picasso
 
 class PokemonListAdapter(
-            private var pokemons: List<PokemonListEntry> = emptyList<PokemonListEntry>()
+            private var pokemons: List<PokemonListEntry> = emptyList()
 ) : RecyclerView.Adapter<PokemonListViewHolder>() {
 
     private val TAG = "PokemonListAdapter"
