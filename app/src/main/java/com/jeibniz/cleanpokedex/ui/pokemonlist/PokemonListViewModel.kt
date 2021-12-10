@@ -14,9 +14,15 @@ class PokemonListViewModel(
         requestGenOnePokemons()
     }
 
-    private var _pokemons: LiveData<Result<List<PokemonListEntry>>> =
-        getGenOnePokemons.observePokemons().asLiveData().switchMap { results ->
-            MutableLiveData(results.map { pokemons -> pokemons.map { it.toPokemonListEntry() } })
+    private var _pokemons: LiveData<List<PokemonListEntry>> =
+        getGenOnePokemons.observePokemons().asLiveData().switchMap { result ->
+            val liveData = MutableLiveData<List<PokemonListEntry>>()
+            if (result is Result.Success) {
+                val mappedPokemons = result.data.map { it.toPokemonListEntry() }
+                liveData.postValue(mappedPokemons)
+            }
+
+            return@switchMap liveData
         }
     val pokemons = _pokemons
 

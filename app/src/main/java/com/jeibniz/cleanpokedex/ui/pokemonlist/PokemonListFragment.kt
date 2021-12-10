@@ -5,8 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jeibniz.cleanpokedex.R
@@ -25,14 +30,34 @@ class PokemonListFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.pokemon_list_fragment, container, false)
+        viewModel =  ViewModelProvider(this, viewModelFactory).get(PokemonListViewModel::class.java)
+        //return inflater.inflate(R.layout.pokemon_list_fragment, container, false)
+        return ComposeView(requireContext()).apply {
+            setContent {
+                val pokemons by viewModel.pokemons.observeAsState()
+                pokemons?.let {
+                    PokemonListScreen(it,
+                        onEvent = { event ->
+                            when (event) {
+                                is PokemonListEvent.NavigateToDetails -> navigateToDetails(event.itemId)
+                            }
+                        }
+                    ) }
+            }
+        }
+    }
+
+    private fun navigateToDetails(itemId: Int) {
+        val action = PokemonListFragmentDirections
+            .actionPokemonListFragmentToPokemonDetailsFragment(itemId)
+        findNavController().navigate(action)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel =  ViewModelProvider(this, viewModelFactory).get(PokemonListViewModel::class.java)
-        initUiComponents(view)
-        subscribeObservers()
+
+        //initUiComponents(view)
+        //subscribeObservers()
     }
 
     private fun initUiComponents(view: View) {
@@ -45,7 +70,7 @@ class PokemonListFragment(
     private fun subscribeObservers() {
         viewModel.pokemons.observe(
             viewLifecycleOwner) {
-            onDataChanged(it)
+            //onDataChanged(it)
         }
     }
 

@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
@@ -28,11 +26,10 @@ class PokemonDetailFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val s = R.string.app_name
         return ComposeView(requireContext()).apply {
             setContent {
                 val pokemon by viewModel.pokemon.observeAsState()
-                PokemonDetailsScreen(pokemon)
+                pokemon?.let { PokemonDetailsScreen(it) }
             }
         }
     }
