@@ -12,7 +12,6 @@ import com.jeibniz.cleanpokedex.framework.data.local.pokemon.PokemonDao
 import com.jeibniz.cleanpokedex.framework.data.local.pokemon.RoomDataSource
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.NetworkConstants
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.RetrofitDataSource
-import com.jeibniz.cleanpokedex.ui.pokemonlist.PokemonListAdapter
 import com.jeibniz.cleanpokedex.usecases.pokemondetail.GetPokemon
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 import dagger.Module
@@ -101,12 +100,5 @@ class AppModule {
     @Provides
     fun provideGetPokemon(pokemonRepository: PokemonRepository): GetPokemon {
         return GetPokemon(pokemonRepository)
-    }
-
-    // Ui
-
-    @Provides
-    fun providePokemonListAdapter(): PokemonListAdapter {
-        return PokemonListAdapter(emptyList())
     }
 }

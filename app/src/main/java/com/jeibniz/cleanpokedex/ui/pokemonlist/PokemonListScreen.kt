@@ -10,9 +10,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.jeibniz.cleanpokedex.ui.components.PokemonType
+import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 
 sealed class PokemonListEvent {
@@ -40,42 +44,75 @@ fun onItemClick(pokemon: PokemonListEntry, onEvent: (PokemonListEvent) -> Unit) 
 
 @Composable
 fun PokemonRow(pokemon: PokemonListEntry, modifier: Modifier = Modifier) {
+    val viewHeight = 120.dp
+
     Row(modifier = modifier) {
-        Image(
-            painter = rememberImagePainter(pokemon.imageUrl),
-            contentDescription = null,
-            modifier = Modifier
-                .width(120.dp)
-                .height(120.dp)
-        )
-
-        Column(
-            verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .height(120.dp)
-                .padding(vertical = 10.dp)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 20.dp)
-            ) {
-                Text(text = pokemon.name,
-                    fontSize = 22.sp)
-                Text(text = pokemon.number.toString().padStart(3, '0'),
-                    fontSize = 18.sp)
-            }
-
-            Row {
-                pokemon.types.forEach { type ->
-                    Text(
-                        text = type,
-                        modifier = Modifier.padding(end = 10.dp)
-                    )
-                }
-            }
-        }
+        PokemonImage(pokemon, viewHeight)
+        PokemonInfo(viewHeight, pokemon)
     }
+}
+
+@Composable
+private fun PokemonInfo(
+    viewHeight: Dp,
+    pokemon: PokemonListEntry
+) {
+    Column(
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .height(viewHeight)
+            .padding(top = 10.dp, bottom = 20.dp)
+    ) {
+        PokemonDetailsInfo(pokemon)
+        PokemonTypesRow(pokemon.types)
+    }
+}
+
+@Composable
+private fun PokemonDetailsInfo(pokemon: PokemonListEntry) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(end = 20.dp)
+    ) {
+        Text(
+            text = pokemon.name,
+            fontSize = 22.sp
+        )
+        Text(
+            text = pokemon.number.toString().padStart(3, '0'),
+            fontSize = 18.sp
+        )
+    }
+}
+
+@Composable
+private fun PokemonImage(
+    pokemon: PokemonListEntry,
+    viewHeight: Dp
+) {
+    Image(
+        painter = rememberImagePainter(pokemon.imageUrl),
+        contentDescription = null,
+        modifier = Modifier
+            .width(viewHeight)
+            .height(viewHeight)
+    )
+}
+
+@Preview(name = "Pokemon List")
+@Composable
+fun PokemonListScreenPreview() {
+    val list = listOf(
+        PokemonListEntry(name =  "Geodude", number = 74, listOf("Rock", "Ground"),
+        "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png\""),
+        PokemonListEntry(name =  "Geodude2", number = 75, listOf("Rock", "Water"),
+            "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png\""),
+        PokemonListEntry(name =  "Geodude3", number = 76, listOf("Rock", "Fire"),
+            "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png\""),
+    )
+
+    PokemonListScreen(list) { _ -> }
 }

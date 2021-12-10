@@ -17,16 +17,22 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.R
+import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
 
 @Composable
 fun PokemonDetailsScreen(pokemon: Pokemon) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp)
+        .padding(start = 16.dp)
+        .padding(end = 25.dp)
         .wrapContentWidth(Alignment.CenterHorizontally)
     ) {
         PokemonImage(pokemon)
         HeaderText(pokemon)
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        PokemonTypesRow(pokemon.types)
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -69,7 +75,7 @@ private fun HeaderText(pokemon: Pokemon, modifier: Modifier = Modifier) {
             fontSize = 24.sp
         )
         Text(
-            text = pokemon.number.toString(),
+            text = pokemon.number.toString().padStart(3, '0'),
             fontSize = 18.sp
         )
     }
