@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +23,6 @@ import coil.compose.rememberImagePainter
 import com.jeibniz.cleanpokedex.R
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
-
 
 @Composable
 fun PokemonDetailsScreen(pokemon: Pokemon) {
