@@ -1,28 +1,28 @@
 package com.jeibniz.cleanpokedex.ui.pokemondetail
 
 import androidx.lifecycle.*
-import com.jeibniz.cleanpokedex.data.Resource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
-import com.jeibniz.cleanpokedex.ui.pokemonlist.toPokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemondetail.GetPokemon
+import com.jeibniz.cleanpokedex.data.Result
+import kotlinx.coroutines.launch
 
 class PokemonDetailViewModel(
-    getPokemon: GetPokemon
+    private val getPokemon: GetPokemon
 ) : ViewModel() {
 
-    private val pokemonNumber = MutableLiveData<Int>()
-
-    private val pokemon = pokemonNumber.switchMap { number ->
-        getPokemon(number).map { it }
-    }
-
-    fun start(number: Int) {
-        if (number == pokemonNumber.value) {
-            return
+    private val _pokemon = getPokemon.observePokemon().asLiveData().switchMap { result ->
+        val liveData = MutableLiveData<Pokemon>()
+        if (result is Result.Success) {
+            liveData.postValue(result.data)
         }
-        pokemonNumber.value = number
+
+        return@switchMap liveData
     }
+    val pokemon: LiveData<Pokemon> = _pokemon
 
-    fun observePokemon() = pokemon
-
+    fun requestPokemon(number: Int) {
+        viewModelScope.launch {
+            getPokemon.requestPokemon(number)
+        }
+    }
 }

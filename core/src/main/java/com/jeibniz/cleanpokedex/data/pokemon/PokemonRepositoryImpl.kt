@@ -1,12 +1,13 @@
 package com.jeibniz.cleanpokedex.data.pokemon
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.asLiveData
-import com.jeibniz.cleanpokedex.data.Resource
+import com.jeibniz.cleanpokedex.data.Result
+import com.jeibniz.cleanpokedex.data.succeeded
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class PokemonRepositoryImpl(
@@ -16,28 +17,40 @@ class PokemonRepositoryImpl(
 
     private val TAG = "PokemonRepositoryImpl"
 
-    override fun observePokemon(index: Int): LiveData<Resource<Pokemon>> {
-        return localDataSource.observeSingle(index).asLiveData()
+    val pokemonFlow = MutableStateFlow<Result<Pokemon>>(Result.Loading)
+
+    val pokemonsListFlow = MutableStateFlow<Result<List<Pokemon>>>(Result.Loading)
+
+    override fun observePokemon(): Flow<Result<Pokemon>> {
+        return pokemonFlow
     }
 
-    override fun observePokemons(from: Int, to: Int): LiveData<Resource<List<Pokemon>>> {
-        val localLiveData = localDataSource.observeRange(from, to).asLiveData()
-        val expectedSize = to - from
+    override fun observePokemons(): Flow<Result<List<Pokemon>>> {
+        return pokemonsListFlow
+    }
 
-        localLiveData.observeForever(Observer {  })
+    override suspend fun requestPokemon(index: Int) {
+        val localDataFlow = localDataSource.observeSingle(index)
+        localDataFlow.collect { pokemonFlow.emit(it) }
+    }
 
-        if (!rangeIsValid(localLiveData.value, expectedSize)) {
-            updateLocalRangeFromRemote(from, to)
+    override suspend fun requestPokemons(from: Int, to: Int) {
+        val localDataFlow = localDataSource.observeRange(from, to)
+        localDataFlow.collect { resultList ->
+            pokemonsListFlow.emit(resultList)
+
+            val expectedSize = to - from
+            if (!rangeIsValid(resultList, expectedSize)) {
+                updateLocalRangeFromRemote(from, to)
+            }
         }
-
-        return localLiveData
     }
 
-    private fun rangeIsValid(resource: Resource<List<Pokemon>>?, expectedSize: Int): Boolean {
-        if (resource?.data == null) {
+    private fun rangeIsValid(result: Result<List<Pokemon>>?, expectedSize: Int): Boolean {
+        if (result != null && !result.succeeded) {
             return false
         }
-        if (resource.data.size < expectedSize) {
+        if (result is Result.Success && result.data.size < expectedSize) {
             return false
         }
 
@@ -48,10 +61,11 @@ class PokemonRepositoryImpl(
         GlobalScope.launch {
             for (i in from .. to) {
                 val remoteData = remoteDataSource.getSingle(i)
-                if (remoteData.status == Resource.Status.SUCCESS) {
-                    localDataSource.saveSingle(remoteData.data!!)
-                } else if (remoteData.status == Resource.Status.ERROR) {
-                    Log.e(TAG, "observePokemons: Remote data error: " + remoteData.throwable.toString(), remoteData.throwable)
+                if (remoteData is Result.Success) {
+                    localDataSource.saveSingle(remoteData.data)
+                } else if (remoteData is Result.Error) {
+                    Log.e(TAG, "observePokemons: Remote data error: " +
+                            remoteData.exception.toString(), remoteData.exception)
                 }
             }
         }
