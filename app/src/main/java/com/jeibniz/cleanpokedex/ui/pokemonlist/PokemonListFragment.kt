@@ -38,7 +38,7 @@ class PokemonListFragment(
 
     private fun navigateToDetails(itemId: Int) {
         val action = PokemonListFragmentDirections
-            .actionPokemonListFragmentToPokemonDetailsFragment(itemId)
+            .actionPokemonListFragmentToPokemonDetailsFragment()
         findNavController().navigate(action)
     }
 }
