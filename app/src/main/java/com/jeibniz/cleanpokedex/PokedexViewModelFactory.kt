@@ -10,7 +10,7 @@ import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 class PokedexViewModelFactory(
     private val getGenOnePokemons: GetGenOnePokemons,
     private val getPokemon: GetPokemon
-) : ViewModelProvider.Factory{
+) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

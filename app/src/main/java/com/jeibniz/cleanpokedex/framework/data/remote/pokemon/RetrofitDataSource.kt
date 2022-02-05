@@ -8,11 +8,12 @@ import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.DescriptionL
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.PokemonDescription
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
-import retrofit2.Retrofit
 import java.io.IOException
+import retrofit2.Retrofit
 
 class RetrofitDataSource(
-    retrofit: Retrofit): PokemonRemoteDataSource {
+    retrofit: Retrofit
+) : PokemonRemoteDataSource {
 
     private val TAG = "RetrofitDataSource"
 
@@ -31,7 +32,7 @@ class RetrofitDataSource(
             return Result.Error(exception)
         }
 
-        return  Result.Success(resultList)
+        return Result.Success(resultList)
     }
 
     override suspend fun getSingle(index: Int): Result<Pokemon> {
@@ -42,7 +43,7 @@ class RetrofitDataSource(
         }
     }
 
-    private fun getSinglePokemon(index: Int) : Pokemon {
+    private fun getSinglePokemon(index: Int): Pokemon {
         val pokemon = getGeneralPokemon(index)
         pokemon.description = getFirstEnglishPokemonDescription(index)
 
@@ -90,6 +91,4 @@ class RetrofitDataSource(
         }
         return firstDescription
     }
-
-
 }

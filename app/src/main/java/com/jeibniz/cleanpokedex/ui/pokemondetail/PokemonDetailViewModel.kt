@@ -1,9 +1,14 @@
 package com.jeibniz.cleanpokedex.ui.pokemondetail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.usecases.pokemondetail.GetPokemon
-import com.jeibniz.cleanpokedex.data.Result
 import kotlinx.coroutines.launch
 
 class PokemonDetailViewModel(

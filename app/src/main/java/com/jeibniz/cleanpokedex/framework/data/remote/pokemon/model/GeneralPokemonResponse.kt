@@ -10,4 +10,3 @@ data class GeneralPokemonResponse(
     val weight: Int,
     val sprites: SpriteResponse
 )
-

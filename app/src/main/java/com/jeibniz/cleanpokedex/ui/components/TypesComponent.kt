@@ -1,7 +1,13 @@
 package com.jeibniz.cleanpokedex.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,17 +35,21 @@ fun PokemonType(type: String, modifier: Modifier = Modifier) {
     val shape = RoundedCornerShape(3.dp)
     val color = typeToColor[type] ?: Color.White
 
-    Column(modifier = modifier
-        .wrapContentSize(Alignment.Center)) {
+    Column(
+        modifier = modifier
+            .wrapContentSize(Alignment.Center)
+    ) {
         Box(
             modifier = Modifier
                 .clip(shape)
                 .background(color)
         ) {
-            Text(text = type,
+            Text(
+                text = type,
                 color = Color.White,
                 modifier = Modifier
-                    .padding(vertical = 1.dp, horizontal = 8.dp))
+                    .padding(vertical = 1.dp, horizontal = 8.dp)
+            )
         }
     }
 }

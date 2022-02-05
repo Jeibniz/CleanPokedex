@@ -4,7 +4,8 @@ import android.util.Log
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.succeeded
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -58,14 +59,17 @@ class PokemonRepositoryImpl(
     }
 
     private fun updateLocalRangeFromRemote(from: Int, to: Int) {
-        GlobalScope.launch {
-            for (i in from .. to) {
+        CoroutineScope(Dispatchers.IO).launch {
+            for (i in from..to) {
                 val remoteData = remoteDataSource.getSingle(i)
                 if (remoteData is Result.Success) {
                     localDataSource.saveSingle(remoteData.data)
                 } else if (remoteData is Result.Error) {
-                    Log.e(TAG, "observePokemons: Remote data error: " +
-                            remoteData.exception.toString(), remoteData.exception)
+                    Log.e(
+                        TAG,
+                        "observePokemons: Remote data error: " + remoteData.exception.toString(),
+                        remoteData.exception
+                    )
                 }
             }
         }

@@ -7,7 +7,7 @@ object NetworkConstants {
 
     @JvmField
     val TIME_UNIT = TimeUnit.SECONDS
-    const val CALL_TIMEOUT = 20;
+    const val CALL_TIMEOUT = 20
     const val READ_TIMEOUT = 20
     const val WRITE_TIMEOUT = 20
 }

@@ -16,10 +16,10 @@ import com.jeibniz.cleanpokedex.usecases.pokemondetail.GetPokemon
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 class AppModule {
@@ -35,10 +35,10 @@ class AppModule {
     @Provides
     fun providePokedexDatabase(context: Context): PokedexDatabase {
         return Room.databaseBuilder(
-                context.applicationContext,
-                PokedexDatabase::class.java,
-                PokedexDatabase.DATABASE_NAME
-            ).build()
+            context.applicationContext,
+            PokedexDatabase::class.java,
+            PokedexDatabase.DATABASE_NAME
+        ).build()
     }
 
     @Provides

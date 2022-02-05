@@ -5,4 +5,4 @@ data class PokemonListEntry(
     val number: Int,
     val types: List<String>,
     val imageUrl: String
-    )
+)

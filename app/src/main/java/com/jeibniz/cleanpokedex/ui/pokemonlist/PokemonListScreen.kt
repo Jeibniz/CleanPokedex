@@ -2,7 +2,13 @@ package com.jeibniz.cleanpokedex.ui.pokemonlist
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
@@ -15,7 +21,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.jeibniz.cleanpokedex.ui.components.PokemonType
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 
@@ -23,16 +28,18 @@ sealed class PokemonListEvent {
     data class NavigateToDetails(val itemId: Int) : PokemonListEvent()
 }
 
-
 @Composable
-fun PokemonListScreen(pokemonList: List<PokemonListEntry>,
-                      onEvent: (PokemonListEvent) -> Unit) {
+fun PokemonListScreen(
+    pokemonList: List<PokemonListEntry>,
+    onEvent: (PokemonListEvent) -> Unit
+) {
     LazyColumn() {
         items(pokemonList) { pokemon ->
             PokemonRow(
                 pokemon = pokemon,
                 modifier = Modifier
-                    .clickable(onClick = { onItemClick(pokemon, onEvent) }))
+                    .clickable(onClick = { onItemClick(pokemon, onEvent) })
+            )
             Divider()
         }
     }
@@ -106,12 +113,24 @@ private fun PokemonImage(
 @Composable
 fun PokemonListScreenPreview() {
     val list = listOf(
-        PokemonListEntry(name =  "Geodude", number = 74, listOf("Rock", "Ground"),
-        "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png\""),
-        PokemonListEntry(name =  "Geodude2", number = 75, listOf("Rock", "Water"),
-            "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png\""),
-        PokemonListEntry(name =  "Geodude3", number = 76, listOf("Rock", "Fire"),
-            "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png\""),
+        PokemonListEntry(
+            name = "Geodude",
+            number = 74,
+            listOf("Rock", "Ground"),
+            "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png\""
+        ),
+        PokemonListEntry(
+            name = "Geodude2",
+            number = 75,
+            listOf("Rock", "Water"),
+            "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png\""
+        ),
+        PokemonListEntry(
+            name = "Geodude3",
+            number = 76,
+            listOf("Rock", "Fire"),
+            "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png\""
+        ),
     )
 
     PokemonListScreen(list) { _ -> }

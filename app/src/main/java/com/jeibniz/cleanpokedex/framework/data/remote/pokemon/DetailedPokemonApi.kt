@@ -1,6 +1,5 @@
 package com.jeibniz.cleanpokedex.framework.data.remote.pokemon
 
-import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model.GeneralPokemonResponse
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.DetailedPokemonResponse
 import retrofit2.Call
 import retrofit2.http.GET

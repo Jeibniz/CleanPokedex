@@ -1,10 +1,10 @@
 package com.jeibniz.cleanpokedex.framework.data.local.pokemon
 
+import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonLocalDataSource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.mappers.toPokemonEntity
-import com.jeibniz.cleanpokedex.data.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -17,7 +17,7 @@ class RoomDataSource(
     }
 
     override fun observeSingle(index: Int): Flow<Result<Pokemon>> {
-        return pokemonDao.getByNumber(index).map { Result.Success(it.first().toPokemon())}
+        return pokemonDao.getByNumber(index).map { Result.Success(it.first().toPokemon()) }
     }
 
     override suspend fun saveRange(data: List<Pokemon>) {

@@ -14,7 +14,8 @@ class PokedexViewModelFactoryModule {
     @Provides
     fun providePokedexViewModelFactory(
         getGenOnePokemons: GetGenOnePokemons,
-        getPokemon: GetPokemon): ViewModelProvider.Factory {
+        getPokemon: GetPokemon
+    ): ViewModelProvider.Factory {
         return PokedexViewModelFactory(getGenOnePokemons, getPokemon)
     }
 }

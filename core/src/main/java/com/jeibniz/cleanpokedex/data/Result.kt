@@ -1,7 +1,5 @@
 package com.jeibniz.cleanpokedex.data
 
-import androidx.lifecycle.LiveData
-
 /**
  * Wraps data and allows us to enrich it with error messages etc.
  * @param <T> Should be a model class. </T>
@@ -21,9 +19,10 @@ sealed class Result<out R> {
     }
 
     fun <S> map(
-        mapper: (value: R) -> S): Result<S> {
+        mapper: (value: R) -> S
+    ): Result<S> {
         return when (this) {
-            is Success<*> -> {
+            is Success<R> -> {
                 Success(mapper(this.data as R))
             }
             is Error -> {

@@ -17,21 +17,24 @@ class PokemonListFragment(
     private lateinit var viewModel: PokemonListViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel =  ViewModelProvider(this, viewModelFactory).get(PokemonListViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(PokemonListViewModel::class.java)
         return ComposeView(requireContext()).apply {
             setContent {
                 val pokemons by viewModel.pokemons.observeAsState()
                 pokemons?.let {
-                    PokemonListScreen(it,
+                    PokemonListScreen(
+                        it,
                         onEvent = { event ->
                             when (event) {
                                 is PokemonListEvent.NavigateToDetails -> navigateToDetails(event.itemId)
                             }
                         }
-                    ) }
+                    )
+                }
             }
         }
     }

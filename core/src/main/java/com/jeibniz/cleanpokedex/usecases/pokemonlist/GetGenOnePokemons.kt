@@ -3,7 +3,8 @@ package com.jeibniz.cleanpokedex.usecases.pokemonlist
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonRepository
 
 class GetGenOnePokemons(
-    private val repository: PokemonRepository) {
+    private val repository: PokemonRepository
+) {
 
     private val genOneLowerLimit = 1
     private val genOneUpperLimit = 151

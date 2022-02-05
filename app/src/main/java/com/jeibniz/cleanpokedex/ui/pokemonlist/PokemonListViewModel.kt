@@ -1,6 +1,11 @@
 package com.jeibniz.cleanpokedex.ui.pokemonlist
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
@@ -31,5 +36,4 @@ class PokemonListViewModel(
             getGenOnePokemons.requestPokemons()
         }
     }
-
 }
