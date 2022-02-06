@@ -4,9 +4,9 @@ import com.jeibniz.cleanpokedex.data.pokemon.PokemonLocalDataSource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.mappers.toPokemonEntity
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class PokemonLocalDataSourceImpl @Inject constructor(
     private val pokemonDao: PokemonDao
@@ -14,7 +14,8 @@ class PokemonLocalDataSourceImpl @Inject constructor(
 
     override fun getRange(from: Int, to: Int): Flow<List<Pokemon>> {
         return pokemonDao.getRange(from, to).map { list ->
-            return@map list.map { it.toPokemon() } }
+            return@map list.map { it.toPokemon() }
+        }
     }
 
     override fun getSingle(index: Int): Flow<Pokemon> {

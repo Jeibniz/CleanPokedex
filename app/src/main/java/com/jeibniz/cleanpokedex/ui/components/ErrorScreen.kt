@@ -20,7 +20,8 @@ fun ErrorScreen(onReload: () -> Unit) {
         Text(text = "Something went wrong")
         Button(
             onClick = { onReload() },
-            colors = ButtonDefaults.textButtonColors()) {
+            colors = ButtonDefaults.textButtonColors()
+        ) {
             Text("Try again")
         }
     }

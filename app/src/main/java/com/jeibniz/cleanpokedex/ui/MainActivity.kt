@@ -1,9 +1,9 @@
-package com.jeibniz.cleanpokedex
+package com.jeibniz.cleanpokedex.ui
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -15,7 +15,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @ExperimentalFoundationApi
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     private val pokemonListViewModel by viewModels<PokemonListViewModel>()
     private val pokemonDetailViewModel by viewModels<PokemonDetailViewModel>()

@@ -1,21 +1,31 @@
 package com.jeibniz.cleanpokedex.ui.pokemondetail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,11 +46,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun PokemonDetailsScreen(
     viewModel: PokemonDetailViewModel,
-    pokemonNumber: Int
+    pokemonNumber: Int,
+    onUpPress: () -> Unit
 ) {
     viewModel.requestPokemon(pokemonNumber)
     val pokemonResult by viewModel.pokemonDetails.collectAsState()
-    PokemonDetailsScreen(pokemonResult) {
+    PokemonDetailsScreen(pokemonResult, onUpPress) {
         viewModel.requestPokemon(pokemonNumber)
     }
 }
@@ -49,11 +60,12 @@ fun PokemonDetailsScreen(
 @Composable
 fun PokemonDetailsScreen(
     pokemonResult: Result<Pokemon>,
+    onUpPress: () -> Unit,
     onRefresh: () -> Unit
 ) {
 
     when (pokemonResult) {
-        is SuccessResult -> PokemonDetailsView(pokemonResult.data)
+        is SuccessResult -> PokemonDetailsView(pokemonResult.data, onUpPress)
         is LoadingResult -> LoadingScreen()
         is ErrorResult -> ErrorScreen {
             onRefresh()
@@ -63,7 +75,7 @@ fun PokemonDetailsScreen(
 
 @ExperimentalCoroutinesApi
 @Composable
-fun PokemonDetailsView(pokemon: Pokemon) {
+fun PokemonDetailsView(pokemon: Pokemon, onUpPress: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -71,7 +83,7 @@ fun PokemonDetailsView(pokemon: Pokemon) {
             .padding(end = 25.dp)
             .wrapContentWidth(Alignment.CenterHorizontally)
     ) {
-        PokemonImage(pokemon)
+        PokemonHeader(pokemon, onUpPress)
         HeaderText(pokemon)
         Spacer(modifier = Modifier.height(10.dp))
         PokemonTypesRow(pokemon.types)
@@ -86,6 +98,37 @@ fun PokemonDetailsView(pokemon: Pokemon) {
 }
 
 @Composable
+fun PokemonHeader(pokemon: Pokemon, onUpPress: () -> Unit) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+    ) {
+        PokemonImage(pokemon)
+        UpButton(onUpPress)
+    }
+}
+
+@Composable
+private fun UpButton(upPress: () -> Unit) {
+    IconButton(
+        onClick = upPress,
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .size(36.dp)
+            .background(
+                color = Color.Green.copy(alpha = 0.32f),
+                shape = CircleShape
+            )
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.ArrowBack,
+            tint = Color.White,
+            contentDescription = "Back"
+        )
+    }
+}
+
+@Composable
 private fun PokemonImage(pokemon: Pokemon, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier.padding(horizontal = 60.dp)
@@ -94,8 +137,7 @@ private fun PokemonImage(pokemon: Pokemon, modifier: Modifier = Modifier) {
             painter = rememberImagePainter(pokemon.imageUrl),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -105,9 +147,7 @@ private fun HeaderText(pokemon: Pokemon, modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(
             text = pokemon.name,

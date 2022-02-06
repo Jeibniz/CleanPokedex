@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex
+package com.jeibniz.cleanpokedex.ui
 
 sealed class PokedexNavigation(val route: String) {
     object PokedexList : PokedexNavigation("pokedexList")

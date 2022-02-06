@@ -1,6 +1,5 @@
 package com.jeibniz.cleanpokedex.data.pokemon
 
-import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
 

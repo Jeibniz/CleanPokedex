@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex
+package com.jeibniz.cleanpokedex.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
@@ -46,12 +46,9 @@ fun HomeScreen(
             val arguments = requireNotNull(backStackEntry.arguments)
             val pokemonNumber = arguments.getInt(POKEMON_NUMBER_KEY)
 
-            PokemonDetailsScreen(pokemonDetailViewModel, pokemonNumber)
-            /*
-            DogDetailRoute(dogName, viewModel) {
+            PokemonDetailsScreen(pokemonDetailViewModel, pokemonNumber) {
                 navController.navigateUp()
             }
-             */
         }
     }
 }

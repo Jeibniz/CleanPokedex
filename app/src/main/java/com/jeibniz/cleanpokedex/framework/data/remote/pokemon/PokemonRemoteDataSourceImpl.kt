@@ -1,6 +1,5 @@
 package com.jeibniz.cleanpokedex.framework.data.remote.pokemon
 
-import android.util.Log
 import com.jeibniz.cleanpokedex.data.ErrorResult
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.SuccessResult
@@ -10,7 +9,6 @@ import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.DescriptionL
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.PokemonDescription
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 

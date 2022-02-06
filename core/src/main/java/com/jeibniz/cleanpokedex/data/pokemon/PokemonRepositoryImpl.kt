@@ -1,17 +1,16 @@
 package com.jeibniz.cleanpokedex.data.pokemon
 
-import android.util.Log
 import com.jeibniz.cleanpokedex.data.ErrorResult
 import com.jeibniz.cleanpokedex.data.LoadingResult
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.SuccessResult
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
-import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
     private val localDataSource: PokemonLocalDataSource,
@@ -35,7 +34,6 @@ class PokemonRepositoryImpl @Inject constructor(
                 emit(SuccessResult(localData))
             }
         }
-
     }.flowOn(Dispatchers.IO)
 
     private suspend fun updateLocalFromRemote(pokemonNumbers: List<Int>): Result<List<Pokemon>> {
@@ -45,7 +43,7 @@ class PokemonRepositoryImpl @Inject constructor(
         } else if (remoteData is ErrorResult) {
             Timber.e(
                 javaClass.simpleName,
-                "observePokemons: Remote data error: ${remoteData.errorMessage.toString()}"
+                "observePokemons: Remote data error: ${remoteData.errorMessage}"
             )
         }
         return remoteData
