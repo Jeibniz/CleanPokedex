@@ -5,11 +5,7 @@ import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
-    fun observePokemon(): Flow<Result<Pokemon>>
+    suspend fun getPokemons(from: Int, to: Int): Flow<Result<List<Pokemon>>>
 
-    fun observePokemons(): Flow<Result<List<Pokemon>>>
-
-    suspend fun requestPokemon(index: Int)
-
-    suspend fun requestPokemons(from: Int, to: Int)
+    suspend fun getPokemon(number: Int): Flow<Result<Pokemon>>
 }

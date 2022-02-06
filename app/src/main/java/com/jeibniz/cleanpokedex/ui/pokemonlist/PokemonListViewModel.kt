@@ -1,15 +1,15 @@
 package com.jeibniz.cleanpokedex.ui.pokemonlist
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.jeibniz.cleanpokedex.data.LoadingResult
 import com.jeibniz.cleanpokedex.data.Result
+import com.jeibniz.cleanpokedex.data.map
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,25 +18,20 @@ class PokemonListViewModel @Inject constructor(
     private val getGenOnePokemons: GetGenOnePokemons
 ) : ViewModel() {
 
+    private val _pokemonList: MutableStateFlow<Result<List<PokemonListEntry>>> = MutableStateFlow(LoadingResult)
+    val pokemonList = _pokemonList
+
     init {
-        requestGenOnePokemons()
+       requestPokemons()
     }
 
-    private var _pokemons: LiveData<List<PokemonListEntry>> =
-        getGenOnePokemons.observePokemons().asLiveData().switchMap { result ->
-            val liveData = MutableLiveData<List<PokemonListEntry>>()
-            if (result is Result.Success) {
-                val mappedPokemons = result.data.map { it.toPokemonListEntry() }
-                liveData.postValue(mappedPokemons)
-            }
-
-            return@switchMap liveData
-        }
-    val pokemons = _pokemons
-
-    private fun requestGenOnePokemons() {
+    fun requestPokemons() {
         viewModelScope.launch {
-            getGenOnePokemons.requestPokemons()
+            getGenOnePokemons.getPokemons().collect { result ->
+                _pokemonList.emit(result.map { data -> data.map { it.toPokemonListEntry() } })
+            }
         }
     }
+
+
 }

@@ -12,30 +12,57 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.jeibniz.cleanpokedex.R
+import com.jeibniz.cleanpokedex.data.ErrorResult
+import com.jeibniz.cleanpokedex.data.LoadingResult
+import com.jeibniz.cleanpokedex.data.Result
+import com.jeibniz.cleanpokedex.data.SuccessResult
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
+import com.jeibniz.cleanpokedex.ui.components.ErrorScreen
+import com.jeibniz.cleanpokedex.ui.components.LoadingScreen
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Composable
 fun PokemonDetailsScreen(
     viewModel: PokemonDetailViewModel,
     pokemonNumber: Int) {
     viewModel.requestPokemon(pokemonNumber)
-    val pokemonNullable by viewModel.pokemon.observeAsState()
-    if (pokemonNullable == null) {
-        return
+    val pokemonResult by viewModel.pokemonDetails.collectAsState()
+    PokemonDetailsScreen(pokemonResult) {
+        viewModel.requestPokemon(pokemonNumber)
     }
-    val pokemon = pokemonNullable!!
+
+}
+
+@ExperimentalCoroutinesApi
+@Composable
+fun PokemonDetailsScreen(
+    pokemonResult: Result<Pokemon>,
+    onRefresh: () -> Unit) {
+
+    when(pokemonResult) {
+        is SuccessResult -> PokemonDetailsView(pokemonResult.data)
+        is LoadingResult -> LoadingScreen()
+        is ErrorResult -> ErrorScreen {
+            onRefresh()
+        }
+    }
+}
+
+@ExperimentalCoroutinesApi
+@Composable
+fun PokemonDetailsView(pokemon: Pokemon) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,6 +84,7 @@ fun PokemonDetailsScreen(
     }
 }
 
+
 @Composable
 private fun PokemonImage(pokemon: Pokemon, modifier: Modifier = Modifier) {
     Surface(
@@ -68,7 +96,6 @@ private fun PokemonImage(pokemon: Pokemon, modifier: Modifier = Modifier) {
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
-
         )
     }
 }

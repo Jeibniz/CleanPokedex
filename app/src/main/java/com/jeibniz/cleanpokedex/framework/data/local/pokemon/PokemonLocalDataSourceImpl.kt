@@ -1,6 +1,7 @@
 package com.jeibniz.cleanpokedex.framework.data.local.pokemon
 
 import com.jeibniz.cleanpokedex.data.Result
+import com.jeibniz.cleanpokedex.data.SuccessResult
 import com.jeibniz.cleanpokedex.data.pokemon.PokemonLocalDataSource
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.mappers.toPokemon
@@ -14,11 +15,11 @@ class PokemonLocalDataSourceImpl @Inject constructor(
 ) : PokemonLocalDataSource {
 
     override fun observeRange(from: Int, to: Int): Flow<Result<List<Pokemon>>> {
-        return pokemonDao.getRange(from, to).map { Result.Success(it.map { it.toPokemon() }) }
+        return pokemonDao.getRange(from, to).map { list -> SuccessResult(list.map { it.toPokemon() }) }
     }
 
     override fun observeSingle(index: Int): Flow<Result<Pokemon>> {
-        return pokemonDao.getByNumber(index).map { Result.Success(it.first().toPokemon()) }
+        return pokemonDao.getByNumber(index).map { SuccessResult(it.first().toPokemon()) }
     }
 
     override suspend fun saveRange(data: List<Pokemon>) {

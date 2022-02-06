@@ -6,10 +6,8 @@ import javax.inject.Inject
 class GetGenOnePokemons @Inject constructor(
     private val repository: PokemonRepository
 ) {
-
     private val genOneLowerLimit = 1
     private val genOneUpperLimit = 151
 
-    fun observePokemons() = repository.observePokemons()
-    suspend fun requestPokemons() = repository.requestPokemons(genOneLowerLimit, genOneUpperLimit)
+    suspend fun getPokemons() = repository.getPokemons(genOneLowerLimit, genOneUpperLimit)
 }
