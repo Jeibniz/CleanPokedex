@@ -41,24 +41,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     packagingOptions {
-        resources.excludes.add("META-INF/atomicfu.kotlin_module")
+        resources.excludes += "META-INF/atomicfu.kotlin_module"
     }
-
-    (this as ExtensionAware).configure<org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions> {
-        jvmTarget = "1.8"
-    }
-
-    /*
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = kotlin.collections.listOf("-Xjvm-default=compatibility")
-    }
-
-    (kotlinOptions as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions).apply {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = kotlin.collections.listOf("-Xjvm-default=compatibility")
-    }
-     */
 }
 
 dependencies {
@@ -67,7 +51,6 @@ dependencies {
     implementation(Dependencies.Androidx.core_ktx)
     implementation(Dependencies.Androidx.appcompat)
     implementation(Dependencies.Androidx.view_model)
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -79,7 +62,6 @@ dependencies {
     implementation("androidx.compose.material:material:1.0.5")
     implementation("androidx.compose.animation:animation:1.0.5")
     implementation("androidx.compose.ui:ui-tooling:1.0.5")
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
     implementation("androidx.navigation:navigation-compose:2.5.0-alpha01")
 
@@ -93,11 +75,10 @@ dependencies {
     androidTestImplementation("androidx.room:room-testing:${Versions.room}")
 
     // Retrofit
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     implementation("com.squareup.retrofit2:retrofit:${Versions.retrofit}")
     implementation("com.squareup.retrofit2:converter-gson:${Versions.retrofit}")
 
     // Coil
     implementation("io.coil-kt:coil-compose:${Versions.coil}")
-
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
 }

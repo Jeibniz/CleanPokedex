@@ -1,6 +1,5 @@
 package com.jeibniz.cleanpokedex.mappers
 
-import android.util.Log
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.framework.data.local.pokemon.PokemonEntity
 import com.jeibniz.cleanpokedex.framework.data.pokemon.remote.model.GeneralPokemonResponse
@@ -19,6 +18,6 @@ fun PokemonEntity.toPokemon(): Pokemon {
 
 fun Pokemon.toPokemonEntity(): PokemonEntity {
     val typesString = types.reduce { acc, s -> String.format("%s %s", acc, s) }
-    Log.d("Mapper", "toPokemonEntity: " + this)
-    return PokemonEntity(number, name, description, imageUrl, typesString, height, weight)
+    val now = System.currentTimeMillis()
+    return PokemonEntity(number, name, description, imageUrl, typesString, height, weight, now)
 }

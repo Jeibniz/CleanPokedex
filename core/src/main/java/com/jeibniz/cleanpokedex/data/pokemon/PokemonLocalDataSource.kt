@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface PokemonLocalDataSource {
 
-    fun observeRange(from: Int, to: Int): Flow<Result<List<Pokemon>>>
+    fun getRange(from: Int, to: Int): Flow<List<Pokemon>>
 
-    fun observeSingle(index: Int): Flow<Result<Pokemon>>
+    fun getSingle(index: Int): Flow<Pokemon>
 
-    suspend fun saveRange(data: List<Pokemon>)
+    suspend fun saveList(data: List<Pokemon>)
 
     suspend fun saveSingle(data: Pokemon)
 }

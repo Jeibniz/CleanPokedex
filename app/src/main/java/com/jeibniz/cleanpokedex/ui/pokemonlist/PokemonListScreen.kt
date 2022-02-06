@@ -57,10 +57,6 @@ fun PokemonListScreen(
             onRefresh()
         }
     }
-
-    if (pokemonList is SuccessResult) {
-        pokemonList.data
-    }
 }
 
 @Composable

@@ -1,6 +1,6 @@
 package com.jeibniz.cleanpokedex.framework.data.local.di
 
-import com.jeibniz.cleanpokedex.framework.data.PokedexDatabase
+import com.jeibniz.cleanpokedex.framework.data.local.PokedexDatabase
 import com.jeibniz.cleanpokedex.framework.data.local.pokemon.PokemonDao
 import dagger.Module
 import dagger.Provides

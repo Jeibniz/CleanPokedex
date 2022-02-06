@@ -12,7 +12,6 @@ import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
 import java.io.IOException
 import javax.inject.Inject
-import retrofit2.Retrofit
 
 class PokemonRemoteDataSourceImpl @Inject constructor(
     private val generalPokemonApi: GeneralPokemonApi,
@@ -21,20 +20,17 @@ class PokemonRemoteDataSourceImpl @Inject constructor(
 
     private val TAG = "RetrofitDataSource"
 
-
-    override suspend fun getRange(from: Int, to: Int): Result<List<Pokemon>> {
-        val resultList = mutableListOf<Pokemon>()
+    override suspend fun getList(pokemonNumbers: List<Int>): Result<List<Pokemon>> {
+        val resultSet = mutableListOf<Pokemon>()
         try {
-            for (i in 0..to - from) {
-                val pokemonIndex = from + i
-                resultList.add(i, getSinglePokemon(pokemonIndex))
-                Log.d(TAG, "getRange: " + resultList.get(i).name)
+            pokemonNumbers.forEach { pokemonNumber ->
+                resultSet.add(getSinglePokemon(pokemonNumber))
             }
         } catch (exception: IOException) {
             return ErrorResult(exception)
         }
 
-        return SuccessResult(resultList)
+        return SuccessResult(resultSet)
     }
 
     override suspend fun getSingle(index: Int): Result<Pokemon> {
@@ -56,7 +52,6 @@ class PokemonRemoteDataSourceImpl @Inject constructor(
         val apiCall = generalPokemonApi.getSingle(index)
         val apiResponse = apiCall.execute()
         Log.d(TAG, "getGeneralPokemon: calling url: " + apiCall.request())
-        apiCall.request().url()
         if (!apiResponse.isSuccessful || apiResponse.body() == null) {
             throw IOException("Unsuccessful retrofit call")
         }
@@ -75,7 +70,6 @@ class PokemonRemoteDataSourceImpl @Inject constructor(
 
         val detailedApiResponse = detailedApiCall.execute()
         Log.d(TAG, "getPokemonDescription: calling url: " + detailedApiCall.request())
-        detailedApiCall.request().url()
         if (!detailedApiResponse.isSuccessful || detailedApiResponse.body() == null) {
             throw IOException("Unsuccessful retrofit call")
         }

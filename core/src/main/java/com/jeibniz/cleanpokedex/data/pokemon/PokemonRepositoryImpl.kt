@@ -5,65 +5,55 @@ import com.jeibniz.cleanpokedex.data.ErrorResult
 import com.jeibniz.cleanpokedex.data.LoadingResult
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.SuccessResult
-import com.jeibniz.cleanpokedex.data.succeeded
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
     private val localDataSource: PokemonLocalDataSource,
     private val remoteDataSource: PokemonRemoteDataSource,
 ) : PokemonRepository {
 
-    private val TAG = "PokemonRepositoryImpl"
-
-    private val pokemonFlow = MutableStateFlow<Result<Pokemon>>(LoadingResult)
-
     override suspend fun getPokemons(from: Int, to: Int) = flow {
         emit(LoadingResult)
-        val localDataFlow = localDataSource.observeRange(from, to)
-        localDataFlow.collect { resultList ->
-            emit(resultList)
+        localDataSource.getRange(from, to).collect { localData ->
+            val numbersLoaded = localData.map { it.number } // TODO add if old
+            val numbersToLoad = (from..to).filter { !numbersLoaded.contains(it) }
+            val remoteData = updateLocalFromRemote(numbersToLoad)
 
-            val expectedSize = to - from
-            if (!rangeIsValid(resultList, expectedSize)) {
-                updateLocalRangeFromRemote(from, to)
+            if (localData.isEmpty()) {
+                if (remoteData is SuccessResult && remoteData.data.isNotEmpty()) {
+                    emit(LoadingResult)
+                } else {
+                    emit(ErrorResult<List<Pokemon>>("Could not load data from API"))
+                }
+            } else {
+                emit(SuccessResult(localData))
             }
         }
+
     }.flowOn(Dispatchers.IO)
 
-    private fun rangeIsValid(result: Result<List<Pokemon>>?, expectedSize: Int): Boolean {
-        if (result != null && !result.succeeded) {
-            return false
+    private suspend fun updateLocalFromRemote(pokemonNumbers: List<Int>): Result<List<Pokemon>> {
+        val remoteData = remoteDataSource.getList(pokemonNumbers)
+        if (remoteData is SuccessResult) {
+            localDataSource.saveList(remoteData.data)
+        } else if (remoteData is ErrorResult) {
+            Log.e(
+                javaClass.simpleName,
+                "observePokemons: Remote data error: " + remoteData.errorMessage.toString()
+            )
         }
-        if (result is SuccessResult && result.data.size < expectedSize) {
-            return false
-        }
-
-        return true
-    }
-
-    private suspend fun updateLocalRangeFromRemote(from: Int, to: Int) {
-        for (i in from..to) {
-            val remoteData = remoteDataSource.getSingle(i)
-            if (remoteData is SuccessResult) {
-                localDataSource.saveSingle(remoteData.data)
-            } else if (remoteData is ErrorResult) {
-                Log.e(
-                    TAG,
-                    "observePokemons: Remote data error: " + remoteData.errorMessage.toString()
-                )
-            }
-        }
+        return remoteData
     }
 
     override suspend fun getPokemon(number: Int) = flow {
         emit(LoadingResult)
-        val localDataFlow = localDataSource.observeSingle(number)
-        localDataFlow.collect { emit(it) }
+        localDataSource.getSingle(number).collect {
+            emit(SuccessResult(it))
+        }
     }.flowOn(Dispatchers.IO)
 }

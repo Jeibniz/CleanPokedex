@@ -2,7 +2,7 @@ package com.jeibniz.cleanpokedex.framework.data.local.di
 
 import android.content.Context
 import androidx.room.Room
-import com.jeibniz.cleanpokedex.framework.data.PokedexDatabase
+import com.jeibniz.cleanpokedex.framework.data.local.PokedexDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

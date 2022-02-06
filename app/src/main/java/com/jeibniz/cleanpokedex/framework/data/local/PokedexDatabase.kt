@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex.framework.data
+package com.jeibniz.cleanpokedex.framework.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -11,6 +11,6 @@ abstract class PokedexDatabase : RoomDatabase() {
     abstract fun getPokemonDao(): PokemonDao
 
     companion object {
-        val DATABASE_NAME: String = "pokemon_database"
+        const val DATABASE_NAME: String = "pokemon_database"
     }
 }
