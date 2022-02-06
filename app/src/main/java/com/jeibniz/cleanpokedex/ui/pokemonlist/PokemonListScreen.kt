@@ -14,13 +14,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
@@ -31,11 +32,13 @@ sealed class PokemonListEvent {
 
 @Composable
 fun PokemonListScreen(
-    pokemonList: List<PokemonListEntry>,
+    viewModel: PokemonListViewModel,
     onEvent: (PokemonListEvent) -> Unit
 ) {
+    val pokemonList by viewModel.pokemons.observeAsState()
+    if (pokemonList == null) return
     LazyColumn() {
-        items(pokemonList) { pokemon ->
+        items(pokemonList!!) { pokemon ->
             PokemonRow(
                 pokemon = pokemon,
                 modifier = Modifier
@@ -110,6 +113,7 @@ private fun PokemonImage(
     )
 }
 
+/*
 @Preview(name = "Pokemon List")
 @Composable
 fun PokemonListScreenPreview() {
@@ -136,3 +140,4 @@ fun PokemonListScreenPreview() {
 
     PokemonListScreen(list) { _ -> }
 }
+ */

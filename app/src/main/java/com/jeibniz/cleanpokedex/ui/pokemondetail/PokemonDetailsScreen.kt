@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -25,7 +27,15 @@ import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
 
 @Composable
-fun PokemonDetailsScreen(pokemon: Pokemon) {
+fun PokemonDetailsScreen(
+    viewModel: PokemonDetailViewModel,
+    pokemonNumber: Int) {
+    viewModel.requestPokemon(pokemonNumber)
+    val pokemonNullable by viewModel.pokemon.observeAsState()
+    if (pokemonNullable == null) {
+        return
+    }
+    val pokemon = pokemonNullable!!
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,6 +121,7 @@ private fun HeightWidthText(pokemon: Pokemon, modifier: Modifier = Modifier) {
     }
 }
 
+/*
 @Preview(name = "Pokemon details")
 @Composable
 fun PokemonDetailsScreenPreview() {
@@ -122,3 +133,4 @@ fun PokemonDetailsScreenPreview() {
         )
     )
 }
+ */

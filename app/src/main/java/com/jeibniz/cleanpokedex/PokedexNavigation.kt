@@ -5,4 +5,4 @@ sealed class PokedexNavigation(val route: String) {
     object PokemonDetails : PokedexNavigation("pokemonDetails")
 }
 
-const val POKEMON_NAME_KEY = "pokedexName"
+const val POKEMON_NUMBER_KEY = "pokedexId"

@@ -70,9 +70,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
-
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-
     implementation(Dependencies.material)
     implementation(Dependencies.timber)
 
@@ -83,19 +81,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:1.0.5")
     implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
     implementation("androidx.navigation:navigation-compose:2.5.0-alpha01")
-
-    // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.androidx_navigation}")
-    implementation("androidx.navigation:navigation-ui-ktx:${Versions.androidx_navigation}")
-    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.androidx_navigation}")
-    implementation("androidx.navigation:navigation-ui-ktx:${Versions.androidx_navigation}")
-
-    // Dagger
-    implementation("com.google.dagger:dagger:${Versions.dagger}")
-    kapt("com.google.dagger:dagger-compiler:${Versions.dagger}")
-    annotationProcessor("com.google.dagger:dagger-compiler:${Versions.dagger}")
 
     // hilt dependencies
     kapt("com.google.dagger:hilt-compiler:2.40.5")
@@ -112,4 +98,6 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:${Versions.coil}")
+
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
 }
