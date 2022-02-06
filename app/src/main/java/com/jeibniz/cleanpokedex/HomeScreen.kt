@@ -30,15 +30,18 @@ fun HomeScreen(
             PokemonListScreen(pokemonListViewModel) { event ->
                 when (event) {
                     is PokemonListEvent.NavigateToDetails -> navController.navigate(
-                        "${PokedexNavigation.PokemonDetails.route}/${event.itemId}")
+                        "${PokedexNavigation.PokemonDetails.route}/${event.itemId}"
+                    )
                 }
             }
         }
         composable(
-            "${PokedexNavigation.PokemonDetails.route}/{${POKEMON_NUMBER_KEY}}",
-            arguments = listOf(navArgument(POKEMON_NUMBER_KEY) {
-                type = NavType.IntType
-            })
+            "${PokedexNavigation.PokemonDetails.route}/{$POKEMON_NUMBER_KEY}",
+            arguments = listOf(
+                navArgument(POKEMON_NUMBER_KEY) {
+                    type = NavType.IntType
+                }
+            )
         ) { backStackEntry ->
             val arguments = requireNotNull(backStackEntry.arguments)
             val pokemonNumber = arguments.getInt(POKEMON_NUMBER_KEY)

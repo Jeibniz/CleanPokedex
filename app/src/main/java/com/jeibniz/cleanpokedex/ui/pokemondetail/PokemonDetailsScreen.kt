@@ -36,22 +36,23 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun PokemonDetailsScreen(
     viewModel: PokemonDetailViewModel,
-    pokemonNumber: Int) {
+    pokemonNumber: Int
+) {
     viewModel.requestPokemon(pokemonNumber)
     val pokemonResult by viewModel.pokemonDetails.collectAsState()
     PokemonDetailsScreen(pokemonResult) {
         viewModel.requestPokemon(pokemonNumber)
     }
-
 }
 
 @ExperimentalCoroutinesApi
 @Composable
 fun PokemonDetailsScreen(
     pokemonResult: Result<Pokemon>,
-    onRefresh: () -> Unit) {
+    onRefresh: () -> Unit
+) {
 
-    when(pokemonResult) {
+    when (pokemonResult) {
         is SuccessResult -> PokemonDetailsView(pokemonResult.data)
         is LoadingResult -> LoadingScreen()
         is ErrorResult -> ErrorScreen {
@@ -83,7 +84,6 @@ fun PokemonDetailsView(pokemon: Pokemon) {
         HeightWidthText(pokemon)
     }
 }
-
 
 @Composable
 private fun PokemonImage(pokemon: Pokemon, modifier: Modifier = Modifier) {

@@ -15,4 +15,3 @@ abstract class LocalDataSourceModule {
         pokemonLocalDataSourceImpl: PokemonLocalDataSourceImpl
     ): PokemonLocalDataSource
 }
-

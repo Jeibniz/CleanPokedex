@@ -1,8 +1,8 @@
 package com.jeibniz.cleanpokedex.utils
 
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 
 interface DispatcherProvider {
 

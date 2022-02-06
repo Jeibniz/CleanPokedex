@@ -11,17 +11,16 @@ import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.PokemonDescr
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
 import java.io.IOException
-import retrofit2.Retrofit
 import javax.inject.Inject
+import retrofit2.Retrofit
 
 class PokemonRemoteDataSourceImpl @Inject constructor(
-    retrofit: Retrofit
+    private val generalPokemonApi: GeneralPokemonApi,
+    private val detailedPokemonApi: DetailedPokemonApi
 ) : PokemonRemoteDataSource {
 
     private val TAG = "RetrofitDataSource"
 
-    private val generalPokemonApi: GeneralPokemonApi = retrofit.create(GeneralPokemonApi::class.java)
-    private val detailedPokemonApi: DetailedPokemonApi = retrofit.create(DetailedPokemonApi::class.java)
 
     override suspend fun getRange(from: Int, to: Int): Result<List<Pokemon>> {
         val resultList = mutableListOf<Pokemon>()

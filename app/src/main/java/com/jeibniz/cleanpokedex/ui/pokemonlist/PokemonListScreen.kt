@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.jeibniz.cleanpokedex.data.ErrorResult
 import com.jeibniz.cleanpokedex.data.LoadingResult
+import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.SuccessResult
 import com.jeibniz.cleanpokedex.ui.components.ErrorScreen
-import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.ui.components.LoadingScreen
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
@@ -50,15 +50,15 @@ fun PokemonListScreen(
     onEvent: (PokemonListEvent) -> Unit,
     onRefresh: () -> Unit
 ) {
-    when(pokemonList) {
-        is SuccessResult -> PokemonListView(pokemonList.data, onEvent)// (pokemonList as SuccessResult<List<PokemonListEntry>>).data
+    when (pokemonList) {
+        is SuccessResult -> PokemonListView(pokemonList.data, onEvent)
         is LoadingResult -> LoadingScreen()
         is ErrorResult -> ErrorScreen {
             onRefresh()
         }
     }
 
-    if (pokemonList is SuccessResult)  {
+    if (pokemonList is SuccessResult) {
         pokemonList.data
     }
 }

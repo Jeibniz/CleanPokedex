@@ -15,4 +15,3 @@ abstract class RemoteDataSourceModule {
         pokemonRemoteDataSourceImpl: PokemonRemoteDataSourceImpl
     ): PokemonRemoteDataSource
 }
-

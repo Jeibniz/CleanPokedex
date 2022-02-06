@@ -8,10 +8,10 @@ import com.jeibniz.cleanpokedex.data.map
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
@@ -22,7 +22,7 @@ class PokemonListViewModel @Inject constructor(
     val pokemonList = _pokemonList
 
     init {
-       requestPokemons()
+        requestPokemons()
     }
 
     fun requestPokemons() {
@@ -32,6 +32,4 @@ class PokemonListViewModel @Inject constructor(
             }
         }
     }
-
-
 }

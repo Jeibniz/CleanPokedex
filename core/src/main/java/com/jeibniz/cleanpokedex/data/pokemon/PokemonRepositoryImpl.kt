@@ -7,16 +7,12 @@ import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.SuccessResult
 import com.jeibniz.cleanpokedex.data.succeeded
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
-import kotlinx.coroutines.CoroutineScope
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
     private val localDataSource: PokemonLocalDataSource,

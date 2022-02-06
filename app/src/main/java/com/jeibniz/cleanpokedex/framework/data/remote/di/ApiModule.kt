@@ -25,4 +25,3 @@ class ApiModule {
         return retrofit.create(GeneralPokemonApi::class.java)
     }
 }
-

@@ -1,7 +1,5 @@
 package com.jeibniz.cleanpokedex.framework.data.pokemon.remote
 
-import java.util.concurrent.TimeUnit
-
 object NetworkConstants {
     const val BASE_URL = "https://pokeapi.co/api/v2/"
 

@@ -14,5 +14,4 @@ class DaoModule {
     fun providePokemonDao(pokedexDatabase: PokedexDatabase): PokemonDao {
         return pokedexDatabase.getPokemonDao()
     }
-
 }

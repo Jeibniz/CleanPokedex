@@ -7,13 +7,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RetrofitModule {
+abstract class RepositoryModule {
     @Binds
     abstract fun bindPokemonRepository(
         pokemonRepositoryImpl: PokemonRepositoryImpl
     ): PokemonRepository
 }
-

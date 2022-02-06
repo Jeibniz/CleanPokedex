@@ -30,6 +30,5 @@ fun <R, S> Result<R>.map(
     }
 }
 
-
 val Result<*>.succeeded
     get() = this is SuccessResult && data != null
