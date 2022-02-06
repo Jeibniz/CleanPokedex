@@ -10,6 +10,7 @@ import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.DescriptionL
 import com.jeibniz.cleanpokedex.framework.data.remote.pokemon.model.PokemonDescription
 import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -17,8 +18,6 @@ class PokemonRemoteDataSourceImpl @Inject constructor(
     private val generalPokemonApi: GeneralPokemonApi,
     private val detailedPokemonApi: DetailedPokemonApi
 ) : PokemonRemoteDataSource {
-
-    private val TAG = "RetrofitDataSource"
 
     override suspend fun getList(pokemonNumbers: List<Int>): Result<List<Pokemon>> {
         val resultSet = mutableListOf<Pokemon>()
@@ -51,7 +50,6 @@ class PokemonRemoteDataSourceImpl @Inject constructor(
     private fun getGeneralPokemon(index: Int): Pokemon {
         val apiCall = generalPokemonApi.getSingle(index)
         val apiResponse = apiCall.execute()
-        Log.d(TAG, "getGeneralPokemon: calling url: " + apiCall.request())
         if (!apiResponse.isSuccessful || apiResponse.body() == null) {
             throw IOException("Unsuccessful retrofit call")
         }
@@ -69,7 +67,6 @@ class PokemonRemoteDataSourceImpl @Inject constructor(
         val detailedApiCall = detailedPokemonApi.getSingle(index)
 
         val detailedApiResponse = detailedApiCall.execute()
-        Log.d(TAG, "getPokemonDescription: calling url: " + detailedApiCall.request())
         if (!detailedApiResponse.isSuccessful || detailedApiResponse.body() == null) {
             throw IOException("Unsuccessful retrofit call")
         }

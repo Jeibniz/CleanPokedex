@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
@@ -42,9 +43,9 @@ class PokemonRepositoryImpl @Inject constructor(
         if (remoteData is SuccessResult) {
             localDataSource.saveList(remoteData.data)
         } else if (remoteData is ErrorResult) {
-            Log.e(
+            Timber.e(
                 javaClass.simpleName,
-                "observePokemons: Remote data error: " + remoteData.errorMessage.toString()
+                "observePokemons: Remote data error: ${remoteData.errorMessage.toString()}"
             )
         }
         return remoteData
