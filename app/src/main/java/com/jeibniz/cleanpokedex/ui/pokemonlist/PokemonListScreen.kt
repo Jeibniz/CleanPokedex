@@ -142,7 +142,6 @@ private fun PokemonImage(
     )
 }
 
-
 @Preview(name = "Pokemon List")
 @Composable
 fun PokemonListScreenPreview() {
