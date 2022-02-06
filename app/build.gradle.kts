@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -40,11 +41,24 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     packagingOptions {
-        exclude("META-INF/atomicfu.kotlin_module")
+        resources.excludes.add("META-INF/atomicfu.kotlin_module")
     }
-    kotlinOptions {
+
+    (this as ExtensionAware).configure<org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions> {
         jvmTarget = "1.8"
     }
+
+    /*
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = kotlin.collections.listOf("-Xjvm-default=compatibility")
+    }
+
+    (kotlinOptions as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions).apply {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs = kotlin.collections.listOf("-Xjvm-default=compatibility")
+    }
+     */
 }
 
 dependencies {
@@ -57,6 +71,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
 
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+
     implementation(Dependencies.material)
     implementation(Dependencies.timber)
 
@@ -68,6 +84,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
+    implementation("androidx.navigation:navigation-compose:2.5.0-alpha01")
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:${Versions.androidx_navigation}")
@@ -79,6 +96,10 @@ dependencies {
     implementation("com.google.dagger:dagger:${Versions.dagger}")
     kapt("com.google.dagger:dagger-compiler:${Versions.dagger}")
     annotationProcessor("com.google.dagger:dagger-compiler:${Versions.dagger}")
+
+    // hilt dependencies
+    kapt("com.google.dagger:hilt-compiler:2.40.5")
+    implementation("com.google.dagger:hilt-android:2.40.5")
 
     // Room
     implementation("androidx.room:room-ktx:${Versions.room}")

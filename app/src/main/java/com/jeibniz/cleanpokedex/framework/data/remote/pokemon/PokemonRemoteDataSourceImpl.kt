@@ -10,8 +10,9 @@ import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.utils.TextUtils
 import java.io.IOException
 import retrofit2.Retrofit
+import javax.inject.Inject
 
-class RetrofitDataSource(
+class PokemonRemoteDataSourceImpl @Inject constructor(
     retrofit: Retrofit
 ) : PokemonRemoteDataSource {
 

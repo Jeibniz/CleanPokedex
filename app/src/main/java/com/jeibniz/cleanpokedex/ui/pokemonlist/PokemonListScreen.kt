@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry

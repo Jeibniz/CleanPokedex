@@ -1,19 +1,31 @@
 package com.jeibniz.cleanpokedex
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentFactory
-import javax.inject.Inject
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import com.jeibniz.cleanpokedex.ui.pokemonlist.PokemonListViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@ExperimentalFoundationApi
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var fragmentFactory: FragmentFactory
+    private val pokemonListViewModel by viewModels<PokemonListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDagger()
-        setFragmentFactory()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContent {
+            Surface(color = MaterialTheme.colors.background) {
+                HomeScreen(pokemonListViewModel)
+            }
+        }
+        //setContentView(R.layout.main_activity)
         /*
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -22,13 +34,5 @@ class MainActivity : AppCompatActivity() {
         }
 
          */
-    }
-
-    protected fun injectDagger() {
-        (application as BaseApplication).appComponent.inject(this)
-    }
-
-    private fun setFragmentFactory() {
-        supportFragmentManager.fragmentFactory = fragmentFactory
     }
 }

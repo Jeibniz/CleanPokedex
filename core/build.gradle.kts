@@ -3,6 +3,7 @@ plugins {
     id ("kotlin-android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -31,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    (kotlinOptions as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions).apply {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
@@ -38,7 +43,11 @@ dependencies {
     implementation(Dependencies.coroutines_core)
     implementation(Dependencies.coroutines_android)
 
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0") // TODO remove
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0") // TODO remove
+
+    // hilt dependencies
+    kapt("com.google.dagger:hilt-compiler:2.40.5")
+    implementation("com.google.dagger:hilt-android:2.40.5")
 
     //testImplementation "junit:junit:4.+"
 }

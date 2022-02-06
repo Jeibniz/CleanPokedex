@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PokemonRepositoryImpl(
+class PokemonRepositoryImpl @Inject constructor(
     private val localDataSource: PokemonLocalDataSource,
     private val remoteDataSource: PokemonRemoteDataSource
 ) : PokemonRepository {

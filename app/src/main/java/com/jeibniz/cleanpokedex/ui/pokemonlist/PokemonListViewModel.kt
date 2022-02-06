@@ -9,9 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PokemonListViewModel(
+@HiltViewModel
+class PokemonListViewModel @Inject constructor(
     private val getGenOnePokemons: GetGenOnePokemons
 ) : ViewModel() {
 

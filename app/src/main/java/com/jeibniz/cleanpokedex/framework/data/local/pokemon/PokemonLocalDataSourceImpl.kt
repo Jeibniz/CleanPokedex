@@ -7,8 +7,9 @@ import com.jeibniz.cleanpokedex.mappers.toPokemon
 import com.jeibniz.cleanpokedex.mappers.toPokemonEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class RoomDataSource(
+class PokemonLocalDataSourceImpl @Inject constructor(
     private val pokemonDao: PokemonDao
 ) : PokemonLocalDataSource {
 
