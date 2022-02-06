@@ -17,7 +17,7 @@ fun PokemonEntity.toPokemon(): Pokemon {
 }
 
 fun Pokemon.toPokemonEntity(): PokemonEntity {
-    val typesString = types.reduce { acc, s -> String.format("%s %s", acc, s) }
+    val typesString = types.reduce { acc, s -> "$acc $s" }
     val now = System.currentTimeMillis()
     return PokemonEntity(number, name, description, imageUrl, typesString, height, weight, now)
 }

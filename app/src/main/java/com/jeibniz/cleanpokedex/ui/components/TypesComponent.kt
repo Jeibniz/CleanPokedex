@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -74,3 +75,9 @@ val typeToColor = mapOf(
     "Electric" to Color(0xFFDFBA32),
     "Normal" to Color(0xFF999860)
 )
+
+@Preview(name = "PokemonTypesRow")
+@Composable
+fun PokemonTypesRowPreview() {
+    PokemonTypesRow(listOf("Fire", "Dragon"))
+}

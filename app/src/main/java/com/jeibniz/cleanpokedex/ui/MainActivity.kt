@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import com.jeibniz.cleanpokedex.ui.pokemondetail.PokemonDetailViewModel
 import com.jeibniz.cleanpokedex.ui.pokemonlist.PokemonListViewModel
+import com.jeibniz.cleanpokedex.ui.theme.PokedexTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -23,8 +24,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(color = MaterialTheme.colors.background) {
-                HomeScreen(pokemonListViewModel, pokemonDetailViewModel)
+            PokedexTheme {
+                Surface(color = MaterialTheme.colors.background) {
+                    HomeScreen(pokemonListViewModel, pokemonDetailViewModel)
+                }
             }
         }
     }

@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -141,7 +142,7 @@ private fun PokemonImage(
     )
 }
 
-/*
+
 @Preview(name = "Pokemon List")
 @Composable
 fun PokemonListScreenPreview() {
@@ -166,6 +167,5 @@ fun PokemonListScreenPreview() {
         ),
     )
 
-    PokemonListScreen(list) { _ -> }
+    PokemonListView(list) { _ -> }
 }
- */

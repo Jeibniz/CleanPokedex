@@ -1,4 +1,4 @@
-package com.jeibniz.cleanpokedex.ui.pokemonlist
+package com.jeibniz.cleanpokedex.mappers
 
 import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry

@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
@@ -40,6 +41,7 @@ import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.ui.components.ErrorScreen
 import com.jeibniz.cleanpokedex.ui.components.LoadingScreen
 import com.jeibniz.cleanpokedex.ui.components.PokemonTypesRow
+import com.jeibniz.cleanpokedex.ui.theme.Neutral
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -116,7 +118,7 @@ private fun UpButton(upPress: () -> Unit) {
             .padding(horizontal = 16.dp, vertical = 10.dp)
             .size(36.dp)
             .background(
-                color = Color.Green.copy(alpha = 0.32f),
+                color = Neutral.copy(alpha = 0.32f),
                 shape = CircleShape
             )
     ) {
@@ -188,16 +190,15 @@ private fun HeightWidthText(pokemon: Pokemon, modifier: Modifier = Modifier) {
     }
 }
 
-/*
 @Preview(name = "Pokemon details")
+@ExperimentalCoroutinesApi
 @Composable
 fun PokemonDetailsScreenPreview() {
-    PokemonDetailsScreen(
+    PokemonDetailsView(
         Pokemon(
             "Ponyta", 45, "Likes it warm",
             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/77.png",
             listOf("Fire", "Rock"), 1, 2
         )
-    )
+    ) {}
 }
- */

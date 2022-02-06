@@ -9,6 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.jeibniz.cleanpokedex.ui.pokemonlist.PokemonListView
+import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 
 @Composable
 fun ErrorScreen(onReload: () -> Unit) {
@@ -25,4 +28,11 @@ fun ErrorScreen(onReload: () -> Unit) {
             Text("Try again")
         }
     }
+}
+
+
+@Preview(name = "ErrorScreen")
+@Composable
+fun ErrorScreenPreview() {
+    ErrorScreen { }
 }

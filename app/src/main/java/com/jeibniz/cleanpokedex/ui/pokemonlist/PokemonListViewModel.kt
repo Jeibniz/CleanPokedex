@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jeibniz.cleanpokedex.data.LoadingResult
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.map
+import com.jeibniz.cleanpokedex.mappers.toPokemonListEntry
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 import dagger.hilt.android.lifecycle.HiltViewModel
