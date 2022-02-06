@@ -28,14 +28,16 @@ class PokemonListFragment(
                 pokemons?.let {
                     PokemonListScreen(
                         it,
-                        onEvent = { event ->
-                            when (event) {
-                                is PokemonListEvent.NavigateToDetails -> navigateToDetails(event.itemId)
-                            }
-                        }
+                        onEvent = ::onListItemClicked
                     )
                 }
             }
+        }
+    }
+
+    private fun onListItemClicked(event: PokemonListEvent) {
+        when (event) {
+            is PokemonListEvent.NavigateToDetails -> navigateToDetails(event.itemId)
         }
     }
 

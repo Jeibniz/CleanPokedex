@@ -35,20 +35,14 @@ fun PokemonDetailsScreen(pokemon: Pokemon) {
     ) {
         PokemonImage(pokemon)
         HeaderText(pokemon)
-
         Spacer(modifier = Modifier.height(10.dp))
-
         PokemonTypesRow(pokemon.types)
-
         Spacer(modifier = Modifier.height(10.dp))
-
         Text(
             text = pokemon.description,
             fontSize = 16.sp
         )
-
         Spacer(modifier = Modifier.height(50.dp))
-
         HeightWidthText(pokemon)
     }
 }
