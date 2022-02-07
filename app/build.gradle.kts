@@ -2,7 +2,6 @@ plugins {
     id ("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("androidx.navigation.safeargs")
     id("dagger.hilt.android.plugin")
 }
 
@@ -16,8 +15,7 @@ android {
 
         version = 1
         versionCode = 2
-        versionName = "1.1"
-
+        versionName = "2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,36 +47,29 @@ dependencies {
     implementation(project(":core"))
 
     implementation(Dependencies.Androidx.core_ktx)
-    implementation(Dependencies.Androidx.appcompat)
     implementation(Dependencies.Androidx.view_model)
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation(Dependencies.material)
+    implementation(Dependencies.android_material)
+    implementation(Dependencies.coil)
     implementation(Dependencies.timber)
 
     // Compose
-    implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.material:material:1.0.5")
-    implementation("androidx.compose.animation:animation:1.0.5")
-    implementation("androidx.compose.ui:ui-tooling:1.0.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
-    implementation("androidx.navigation:navigation-compose:2.5.0-alpha01")
+    implementation(Dependencies.Androidx.Compose.compose_activity)
+    implementation(Dependencies.Androidx.Compose.compose_animation)
+    implementation(Dependencies.Androidx.Compose.compose_material)
+    implementation(Dependencies.Androidx.Compose.compose_navigation)
+    implementation(Dependencies.Androidx.Compose.compose_ui_tooling)
+    implementation(Dependencies.Androidx.Compose.compose_viewmodel)
 
-    // hilt dependencies
-    kapt("com.google.dagger:hilt-compiler:2.40.5")
-    implementation("com.google.dagger:hilt-android:2.40.5")
+    // Hilt
+    kapt(Dependencies.Hilt.hilt_android_compiler)
+    implementation(Dependencies.Hilt.hilt_android)
 
     // Room
-    implementation("androidx.room:room-ktx:${Versions.room}")
-    kapt("androidx.room:room-compiler:${Versions.room}")
-    androidTestImplementation("androidx.room:room-testing:${Versions.room}")
+    implementation(Dependencies.Androidx.Room.room)
+    kapt(Dependencies.Androidx.Room.room_compiler)
 
     // Retrofit
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
-    implementation("com.squareup.retrofit2:retrofit:${Versions.retrofit}")
-    implementation("com.squareup.retrofit2:converter-gson:${Versions.retrofit}")
-
-    // Coil
-    implementation("io.coil-kt:coil-compose:${Versions.coil}")
+    implementation(Dependencies.logging_interceptor)
+    implementation(Dependencies.Retrofit.retrofit)
+    implementation(Dependencies.Retrofit.retrofit_converter)
 }

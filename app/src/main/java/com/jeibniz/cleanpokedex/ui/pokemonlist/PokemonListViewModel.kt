@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.jeibniz.cleanpokedex.data.LoadingResult
 import com.jeibniz.cleanpokedex.data.Result
 import com.jeibniz.cleanpokedex.data.map
+import com.jeibniz.cleanpokedex.domain.pokemon.Pokemon
 import com.jeibniz.cleanpokedex.mappers.toPokemonListEntry
 import com.jeibniz.cleanpokedex.ui.pokemonlist.model.PokemonListEntry
 import com.jeibniz.cleanpokedex.usecases.pokemonlist.GetGenOnePokemons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -20,10 +22,11 @@ class PokemonListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _pokemonList: MutableStateFlow<Result<List<PokemonListEntry>>> = MutableStateFlow(LoadingResult)
-    val pokemonList = _pokemonList
+    val pokemonList: StateFlow<Result<List<PokemonListEntry>>> = _pokemonList
 
     init {
         requestPokemons()
+
     }
 
     fun requestPokemons() {
